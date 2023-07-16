@@ -1,7 +1,8 @@
 import React, { useEffect, useCallback } from 'react'
 import classNames from 'classnames'
+import { Modal } from '@mui/material'
 
-export default function Modal({ show, onClose, children, center, big }) {
+export default function ModalBox({ show, onClose, children, center, big }) {
   const closeOnEscape = useCallback((event) => {
     event = event || window.event
 
@@ -45,8 +46,13 @@ export default function Modal({ show, onClose, children, center, big }) {
   )
 
   return (
-    <div className={bodyClass}>
+   <Modal 
+    open={show}
+   >
+     <div className={bodyClass}>
       <div className={childPosition}>{children}</div>
     </div>
+
+   </Modal>
   )
 }

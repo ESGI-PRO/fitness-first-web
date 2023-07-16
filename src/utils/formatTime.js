@@ -1,6 +1,5 @@
-import { format, getTime, formatDistanceToNow } from 'date-fns';
-
-// ----------------------------------------------------------------------
+import { format,  formatDistanceToNow } from 'date-fns';
+import moment from 'moment';
 
 export function fDate(date, newFormat) {
   const fm = newFormat || 'dd MMM yyyy';
@@ -15,7 +14,7 @@ export function fDateTime(date, newFormat) {
 }
 
 export function fTimestamp(date) {
-  return date ? getTime(new Date(date)) : '';
+  return moment(date).format('h:mm A')
 }
 
 export function fToNow(date) {

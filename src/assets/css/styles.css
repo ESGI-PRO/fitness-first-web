@@ -398,3 +398,7 @@
 .lightGrayColorBackground {
   background-color: #DFDFDF;
 }
+
+.box-screen-height {
+  height: calc(100vh - 180px);
+}

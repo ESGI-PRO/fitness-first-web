@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
-import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
+import { Box, Link, Drawer, Typography, Avatar } from '@mui/material';
 // mock
 import account from '../../../_mock/account';
 // hooks
@@ -15,7 +15,7 @@ import Scrollbar from '../../../components/scrollbar';
 import NavSection from '../../../components/nav-section';
 //
 import navConfig from './config';
-import { useAppState } from '../../../context/app-state-context';
+import { getLoggedInUser } from '../../../utils/auth.utils';
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ Nav.propTypes = {
 
 export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
-  const {appState} = useAppState();
+  const user = getLoggedInUser();
   const isDesktop = useResponsive('up', 'lg');
 
   useEffect(() => {
@@ -63,18 +63,18 @@ export default function Nav({ openNav, onCloseNav }) {
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {appState?.user?.userName}
+                {user?.userName}
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {appState?.user?.email}
+                {user?.email}
               </Typography>
             </Box>
           </StyledAccount>
         </Link>
       </Box>
 
-      <NavSection data={navConfig(appState.user)} />
+      <NavSection data={navConfig(user)} />
 
       <Box sx={{ flexGrow: 1 }} />
 
