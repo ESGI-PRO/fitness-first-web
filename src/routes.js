@@ -4,11 +4,11 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from './layouts/dashboard';
 //
 import BlogPage from './pages/BlogPage';
-import UserPage from './pages/UserPage';
+import MessengerPage from './pages/messenger/MessengerPage';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
-import DashboardAppPage from './pages/DashboardAppPage';
+import MeetingPage from './pages/meeting/index';
 import ExerciseDetail from './pages/ExerciseDetail';
 import Home from './pages/Home';
 import SignUpPage from './pages/SignupPage';
@@ -28,9 +28,9 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/dashboard/app" />, index: true },
-        { path: 'app', element: <DashboardAppPage /> },
-        { path: 'user', element: <UserPage /> },
+        { element: <Navigate to="/dashboard/meeting" />, index: true },
+        { path: 'meeting', element: <MeetingPage /> },
+        { path: 'messenger', element: <MessengerPage /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
       ],

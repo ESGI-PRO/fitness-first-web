@@ -47,7 +47,7 @@ const authService = new AuthService();
 
 export default function LoginPage() {
   const mdUp = useResponsive('up', 'md');
-  const {appState,setAppState} = useAppState();
+  const {setAppState} = useAppState();
   const modal = useModal();
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export default function LoginPage() {
 
     if (isUserAuthenticated()) {
       if (isSubscribe) {
-        setAppState({ ...appState, isSubscribe: true });
+        setAppState({isSubscribe: true });
         navigate('/dashboard', { replace: true });
       }else{
         modal.showModal(<SubscriptionCard

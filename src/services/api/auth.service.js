@@ -53,10 +53,10 @@ export default class AuthService {
         const user = JSON.parse(localStorage.getItem("user"));
         if (user) {
             const response = await client.get(FIND__USER_SUBSCRIPTION_URL, {
-                userId: user ?. id
+                userId: user?.id
             });
             handleErrors(response);
-            if (! response.data || response.data ?. subscriptions ?. length > 0) {
+            if (! response.data || response.data?.subscriptions?.length > 0) {
                 return false;
             }
             const hasActiveSubscription = response.data ?. subscriptions ?. filter((subscription) => {
