@@ -10,3 +10,7 @@ export const UPDATE_MEETING_URL = '/messenger/update_meeting'
 export const GET_ALL_USER_MEETING_URL = '/messenger/get-all-meetings'
 export const GET_TWILIO_TOKEN = '/messenger/get-twilio-token'
 export const GET_USERS_BY_IDS = '/users/get_users_by_ids'
+
+// nutrition urls
+export const CREATE_RECETTE_URL = '/nutrition/ingredients'
+export const RECETTE_URL = '/nutrition'

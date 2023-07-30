@@ -29,7 +29,7 @@ const navConfig =  (user) => {
     },
     {
       title: 'nutrition',
-      path: '/login',
+      path: '/dashboard/nutrition',
       icon: icon('ic_nutrition'),
     },
     {

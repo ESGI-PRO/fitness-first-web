@@ -7,6 +7,17 @@ const storage = {
       return null
     }
   },
+
+  async getToken() {
+    try {
+      return JSON.parse(localStorage.getItem("tokens")).access.token
+    } catch (e) {
+      console.error(e)
+      return null
+    }
+  },
+
+
   async setItem(key, data) {
     try {
       const state = JSON.parse(localStorage.getItem(key))
