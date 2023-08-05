@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Formik, Field, FieldArray } from "formik";
 // @mui
-import { Grid, Container, Typography, Select, MenuItem } from "@mui/material";
+import {
+  Grid,
+  Container,
+  Typography,
+  Select,
+  MenuItem,
+  TextField,
+} from "@mui/material";
 import { fetchData, Basicoptions } from "../utils/fetchData";
 import storage from "../context/storage";
 import notif from "../services/alert";
@@ -20,6 +27,7 @@ export default function NutritionPage() {
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [isTrainer, setTrainer] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const Basicoptions = {
     method: "GET",
@@ -53,6 +61,10 @@ export default function NutritionPage() {
 
     basic();
   }, []);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   const initialValues = {
     title: "Ma premiere recette de nutrition pour mes eleves !",
@@ -258,7 +270,7 @@ export default function NutritionPage() {
                                       (produit, pIndex) => (
                                         <div key={pIndex} className="mx-4">
                                           <div className="">
-                                            <label>Quantite:</label>
+                                            <label>Quantite en gr </label>
                                             <Field
                                               type="number"
                                               className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
@@ -266,6 +278,7 @@ export default function NutritionPage() {
                                             />
 
                                             <label>Ingredients:</label>
+                                            
                                             <Select
                                               className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                               name={`instructions[${index}].produits[${pIndex}].ingredients`}
@@ -290,7 +303,7 @@ export default function NutritionPage() {
                                               onClick={() => remove(pIndex)}
                                               className="shadow-sm w-36 m-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2.5 dark:bg-red-700 dark:border-red-600 dark:placeholder-red-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             >
-                                              Remove
+                                              Supprimer ingredient
                                             </button>
                                           </div>
                                         </div>

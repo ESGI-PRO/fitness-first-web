@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Formik, Field, FieldArray } from "formik";
 import { Redirect } from "react-router-dom";
 // @mui
@@ -26,11 +26,11 @@ export default function EditRecette({ recipe }) {
 
   const handleSubmit = (values, { resetForm }) => {
     // Handle form submission
-    values["UserId"] = user.id;
+    // values["UserId"] = user.id;
+    values["studentIds"] = [...values["studentIds"]]
     console.log(values);
     nutrition.updateNutrition(values).then(() => {
       notif.success("Recette mise a jour !");
-
       navigate("/dashboard/nutrition", { replace: true });
     });
     resetForm();
@@ -57,10 +57,34 @@ export default function EditRecette({ recipe }) {
       {/* {JSON.stringify(initialValues)}
       {JSON.stringify(user)} */}
 
-      <h3 class="mb-1 text-4xl font-bold text-gray-900 dark:text-white">
-        Editer une recette
-      </h3>
-      <div className={open ? "" : "hidden"}>
+      <div className="flex row items-center mb-9 ">
+        <Link to="/dashboard/nutrition">
+
+        <svg
+          class="w-6 h-6 text-gray-800 dark:text-white"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 8 14"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"
+          ></path>
+        </svg>
+        </Link>
+
+        <h3 class="mb-1 mx-5 text-4xl font-bold text-gray-900 dark:text-white">
+          Editer une recette
+        </h3>
+      </div>
+
+      <hr/>
+
+      <div className={open ? "my-5" : "hidden"}>
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           {({ values, handleChange, handleSubmit }) => (
             <form onSubmit={handleSubmit}>
@@ -157,7 +181,7 @@ export default function EditRecette({ recipe }) {
                                             onClick={() => remove(pIndex)}
                                             className="shadow-sm w-36 my-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2.5 dark:bg-red-700 dark:border-red-600 dark:placeholder-red-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                           >
-                                            Supprimer
+                                            Supprimer ingredient
                                           </button>
                                         </div>
                                       </div>

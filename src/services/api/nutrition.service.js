@@ -3,10 +3,11 @@ import {
   CREATE_RECETTE_URL,
 } from "../../constants/api.url.constants";
 import storage from "../../context/storage";
+import { getLoggedInUser } from "../../utils/auth.utils";
 import { APIClient, handleErrors } from "../api.client";
 
 const client = new APIClient();
-const userId = await storage.getUserId();
+var user = await getLoggedInUser();
 
 class NutritionService {
   ingredients = [];
@@ -19,7 +20,7 @@ class NutritionService {
     this.myRecettes = [];
     this.getIngredients().then((res) => this.ingredients.push(...res));
 
-    if (userId !== null) {
+    if (user?.id !== null) {
       this.getAllUserNutritions().then((res) => this.myRecettes.push(...res));
       this.getRecettes().then((res) => this.recettes.push(...res));
     }
@@ -28,7 +29,7 @@ class NutritionService {
   async getRecettes() {
     const response = await client.get(RECETTE_URL);
     handleErrors(response);
-    var res = response.data.nutrition;
+    var res = response?.data?.nutrition;
     this.recettes.push(res);
     return res;
   }
@@ -36,14 +37,14 @@ class NutritionService {
   async getRecetteByID(id) {
     const response = await client.get(RECETTE_URL + "/" + parseInt(id));
     handleErrors(response);
-    var res = response.data.nutrition;
+    var res = response?.data?.nutrition;
     return res;
   }
 
   async getIngredients() {
     const response = await client.get(RECETTE_URL + "/ingredients");
     handleErrors(response);
-    var res = response.data.nutrition;
+    var res = response?.data?.nutrition;
     this.ingredients.push(res);
     return res;
   }
@@ -63,14 +64,15 @@ class NutritionService {
   }
 
   async deleteNutrition(id) {
-    const response = await client.delete(RECETTE_URL + '/' + id, {
-      ...data,
-    });
+    const response = await client.delete(RECETTE_URL + '/' + id);
     handleErrors(response);
   }
 
   async getAllUserNutritions() {
-    const response = await client.get(RECETTE_URL + "/" + userId + "/user");
+    console.log("user----------------------------------------------------------------")
+    console.log(user)
+    console.log("user----------------------------------------------------------------")
+    const response = await client.get(RECETTE_URL + "/" + user.id + "/user");
     handleErrors(response);
     var res = response?.data?.nutrition;
     this.myRecettes.push(res);
