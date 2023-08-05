@@ -6,7 +6,7 @@ const getHeaders = async () => {
     const tokens = await getTokens();
     console.log("tokens", tokens)
     return tokens?.access?.token ? {
-        'Authorization': `Bearer `,
+        'Authorization': `Bearer ` + tokens?.access?.token ,
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     } : {

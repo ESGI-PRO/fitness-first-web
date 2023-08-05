@@ -8,8 +8,8 @@ import storage from "../context/storage";
 import notif from "../services/alert";
 import NutritionService from "../services/api/nutrition.service";
 import { Link } from "react-router-dom";
+import nutrition from "../services/api/nutrition.service";
 const API_URL = "http://localhost:8000";
-const apiService = new NutritionService();
 
 export default function NutritionPage() {
   const [users, setUsers] = useState([]);
@@ -18,6 +18,8 @@ export default function NutritionPage() {
   const [token, setToken] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [open, setOpen] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [isTrainer, setTrainer] = useState(false);
 
   const Basicoptions = {
     method: "GET",
@@ -43,6 +45,7 @@ export default function NutritionPage() {
         fetchUsers();
         fetchIngredients();
         fetchMyRecettes();
+        setTrainer(user?.isTrainer);
       } else {
         basic();
       }
@@ -54,7 +57,7 @@ export default function NutritionPage() {
   const initialValues = {
     title: "Ma premiere recette de nutrition pour mes eleves !",
     UserId: user.id,
-    studentIds: [],
+    studentIds: [""],
     instructions: [
       {
         order: 1,
@@ -69,16 +72,41 @@ export default function NutritionPage() {
     ],
   };
 
+  const deleteRecette = (id) => {
+    nutrition.deleteNutrition(id).then(() => {
+      notif.success("Recette supprimé !");
+      fetchMyRecettes();
+    });
+  };
+
   const RecipeCard = ({ recipe }) => {
     return (
-      <div className="bg-white rounded-lg shadow-md p-4 m-4">
+      <div className="w-full flex-col bg-white rounded-lg shadow-md p-4 m-4">
         <h2 className="text-xl font-bold mb-2">{recipe.title}</h2>
         {/* Afficher d'autres informations de la recette ici */}
-        <Link to={`/nutrition/${recipe.id}`}>
+        <Link to={`view/${recipe.id}`}>
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Voir la recette
           </button>
         </Link>
+
+        <div className={isTrainer === true ? " " : "hidden"}>
+          <Link to={`edit/${recipe.id}`} state={{ recipe: recipe }}>
+            <button className="mx-3 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
+              Modifier la recette
+            </button>
+          </Link>
+
+          <button
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            onClick={() => deleteRecette(recipe.id)}
+          >
+            supprimer la recette
+          </button>
+        </div>
+
+        <br />
+        <span className="my-3"> assigné par votre coach : {recipe.UserId}</span>
       </div>
     );
   };
@@ -93,20 +121,16 @@ export default function NutritionPage() {
     );
   };
 
-  const fetchIngredients = () => {
-    fetchData(API_URL + "/nutrition/ingredients", Basicoptions).then((data) => {
-      console.log(data.data?.nutrition);
-      setIngredients(data.data?.nutrition);
-    });
+  const fetchIngredients = async () => {
+    const p = await nutrition.getIngredients();
+
+    setIngredients(p);
   };
 
   const fetchMyRecettes = async () => {
-   await fetchData(API_URL + "/nutrition/" + user?.id + "/user", Basicoptions).then(
-      (data) => {
-        console.log(data.data?.nutrition);
-        setMyRecettes(data.data?.nutrition);
-      }
-    );
+    const p = await nutrition.getAllUserNutritions();
+    console.log("🚀 ~ file: NutritionPage.js:104 ~ fetchMyRecettes ~ p:", p);
+    setMyRecettes(p);
   };
 
   const fetchUsers = () => {
@@ -124,7 +148,7 @@ export default function NutritionPage() {
     //   },
     // })
 
-    apiService
+    nutrition
       .createNutrition(data)
       .then((res) => {
         console.log("La requête a réussi avec le statut");
@@ -154,19 +178,24 @@ export default function NutritionPage() {
       <Container maxWidth="xl">
         <div className="flex justify-between my-5">
           <Typography variant="h4" sx={{ mb: 5 }}>
-            Mes recettes
+            Mes recettes ({MyRecettes.length})
           </Typography>
           <button
             onClick={() => setOpen(!open)}
-            className="text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800"
+            className={
+              isTrainer === false
+                ? "hidden"
+                : "text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800"
+            }
           >
-            Add
+            {open === false ? "Add" : "Close"}
           </button>
         </div>
-
-        <RecipeList />
         {JSON.stringify(user)}
-        
+
+        <div className={open === false ? "" : "hidden"}>
+          <RecipeList />
+        </div>
 
         <div className={open ? "" : "hidden"}>
           <Formik initialValues={initialValues} onSubmit={handleSubmit}>
@@ -186,27 +215,22 @@ export default function NutritionPage() {
                     {({ push, remove }) => (
                       <div>
                         {values.studentIds.map((studentId, index) => (
-                          <div key={index}>
-                            <Field
-                              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                              name={`StudentIds[${index}]`}
-                            />
-                            <button
-                              type="button"
-                              onClick={() => remove(index)}
-                              className="shadow-sm w-36 m-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2.5 dark:bg-red-700 dark:border-red-600 dark:placeholder-red-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            >
-                              Remove
-                            </button>
-                          </div>
+                          <Select
+                            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            onChange={handleChange}
+                            name={`studentIds[${index}]`}
+                          >
+                            {user.traineeIds?.map((option, index) => (
+                              <MenuItem
+                                key={option}
+                                value={option}
+                                selected={option === `studentIds[${index}]`}
+                              >
+                                {option}
+                              </MenuItem>
+                            ))}
+                          </Select>
                         ))}
-                        <button
-                          type="button"
-                          className="shadow-sm w-36 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                          onClick={() => push("")}
-                        >
-                          Add Student
-                        </button>
                       </div>
                     )}
                   </FieldArray>

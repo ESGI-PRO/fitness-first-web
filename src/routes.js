@@ -15,6 +15,7 @@ import ExerciseDetail from "./pages/ExerciseDetail";
 import Home from "./pages/Home";
 import SignUpPage from "./pages/SignupPage";
 import ViewRecette from "./pages/nutrition/ViewRecette";
+import EditRecette from "./pages/nutrition/EditRecette";
 
 export default function Router() {
   const routes = useRoutes([
@@ -40,6 +41,7 @@ export default function Router() {
           // children: [{ path: "view/:id", element: <ViewRecette /> }],
         },
         { path: "nutrition/view/:id", element: <ViewRecette /> },
+        { path: "nutrition/edit/:id", element: <EditRecette /> },
         { path: "blog", element: <BlogPage /> },
       ],
     },
