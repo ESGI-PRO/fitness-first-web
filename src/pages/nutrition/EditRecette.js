@@ -10,10 +10,12 @@ import storage from "../../context/storage";
 import notif from "../../services/alert";
 // @mui
 import nutrition from "../../services/api/nutrition.service";
+import usersAPI from "../../services/api/users.service";
 
 const user = await storage.getItem("user");
 export default function EditRecette({ recipe }) {
   const [ingredients, setIngredients] = useState(nutrition.ingredients);
+  const [users, setUsers] = useState(usersAPI.users);
   const { id } = useParams();
   let { state } = useLocation();
   const [initialValues, setInitialValues] = useState(state.recipe);
@@ -29,6 +31,7 @@ export default function EditRecette({ recipe }) {
     // values["UserId"] = user.id;
     values["studentIds"] = [...values["studentIds"]]
     console.log(values);
+
     nutrition.updateNutrition(values).then(() => {
       notif.success("Recette mise a jour !");
       navigate("/dashboard/nutrition", { replace: true });
@@ -51,6 +54,11 @@ export default function EditRecette({ recipe }) {
     console.log("🚀 ~ file: ViewRecette.js:27 ~ findIngredients ~ p:", p);
     return p?.name;
   };
+
+  const getStudents = (id) => {
+    var m = users.find((it) => it.id === id)
+    return m.userName
+  }
 
   return (
     <div>
@@ -115,7 +123,7 @@ export default function EditRecette({ recipe }) {
                                 value={option}
                                 selected={option === studentId}
                               >
-                                {option}
+                                {getStudents(option)}
                               </option>
                             ))}
                           </select>
@@ -247,7 +255,7 @@ export default function EditRecette({ recipe }) {
                 type="submit"
                 className="text-white w-full bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800"
               >
-                creer ma recette
+                Modifier ma recette
               </button>
             </form>
           )}

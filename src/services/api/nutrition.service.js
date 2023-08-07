@@ -57,22 +57,27 @@ class NutritionService {
   }
 
   async updateNutrition(data) {
-    const response = await client.put(RECETTE_URL + '/' + data.id, {
+    const response = await client.put(RECETTE_URL + "/" + data.id, {
       ...data,
     });
     handleErrors(response);
   }
 
   async deleteNutrition(id) {
-    const response = await client.delete(RECETTE_URL + '/' + id);
+    const response = await client.delete(RECETTE_URL + "/" + id);
     handleErrors(response);
   }
 
   async getAllUserNutritions() {
-    console.log("user----------------------------------------------------------------")
-    console.log(user)
-    console.log("user----------------------------------------------------------------")
-    const response = await client.get(RECETTE_URL + "/" + user.id + "/user");
+    console.log(
+      "user----------------------------------------------------------------"
+    );
+    console.log(user);
+    console.log(
+      "user----------------------------------------------------------------"
+    );
+    var id = user.trainerId ? user.trainerId : user.id;
+    const response = await client.get(RECETTE_URL + "/" + id + "/user");
     handleErrors(response);
     var res = response?.data?.nutrition;
     this.myRecettes.push(res);

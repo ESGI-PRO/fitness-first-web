@@ -14,3 +14,7 @@ export const GET_USERS_BY_IDS = '/users/get_users_by_ids'
 // nutrition urls
 export const CREATE_RECETTE_URL = '/nutrition/ingredients'
 export const RECETTE_URL = '/nutrition'
+
+
+// users urls
+export const USERS_URL = '/users'

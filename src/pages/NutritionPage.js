@@ -16,10 +16,11 @@ import notif from "../services/alert";
 import NutritionService from "../services/api/nutrition.service";
 import { Link } from "react-router-dom";
 import nutrition from "../services/api/nutrition.service";
+import usersAPI from "../services/api/users.service";
 const API_URL = "http://localhost:8000";
 
 export default function NutritionPage() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(usersAPI.users);
   const [MyRecettes, setMyRecettes] = useState([]);
   const [user, setUser] = useState([]);
   const [token, setToken] = useState("");
@@ -40,17 +41,16 @@ export default function NutritionPage() {
   useEffect(() => {
     const basic = async () => {
       const infos = await storage.getToken();
-      console.log(infos);
+      // console.log(infos);
       setToken(infos);
 
       const user = await storage.getItem("user");
       setUser(user);
 
-      console.log(Basicoptions);
+      // console.log(Basicoptions);
 
       if (infos && user) {
         Basicoptions.headers.Authorization = `Bearer ${infos}`;
-        fetchUsers();
         fetchIngredients();
         fetchMyRecettes();
         setTrainer(user?.isTrainer);
@@ -91,26 +91,47 @@ export default function NutritionPage() {
     });
   };
 
+  const getStudents = (id) => {
+    var m = users.find((it) => it.id === id);
+    return m?.userName ? m.userName : "anonymous";
+  };
+
   const RecipeCard = ({ recipe }) => {
+    const getCoach = (id) => {
+      var m = users.find((it) => it.id === id);
+      return m.userName;
+    };
+
     return (
       <div className="w-full flex-col bg-white rounded-lg shadow-md p-4 m-4">
         <h2 className="text-xl font-bold mb-2">{recipe.title}</h2>
         {/* Afficher d'autres informations de la recette ici */}
+       
+
+        <div>
         <Link to={`view/${recipe.id}`}>
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Voir la recette
           </button>
         </Link>
-
-        <div className={isTrainer === true ? " " : "hidden"}>
           <Link to={`edit/${recipe.id}`} state={{ recipe: recipe }}>
-            <button className="mx-3 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
+            <button
+              className={
+                isTrainer === true
+                  ? "mx-3 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+                  : "hidden"
+              }
+            >
               Modifier la recette
             </button>
           </Link>
 
           <button
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            className={
+              isTrainer === true
+                ? "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded "
+                : "hidden"
+            }
             onClick={() => deleteRecette(recipe.id)}
           >
             supprimer la recette
@@ -118,7 +139,12 @@ export default function NutritionPage() {
         </div>
 
         <br />
-        <span className="my-3"> assigné par votre coach : {recipe.UserId}</span>
+        <span className="my-3">
+          {" "}
+          {user.isTrainer
+            ? ""
+            : "assigné par votre coach :" + getCoach(recipe.UserId)}
+        </span>
       </div>
     );
   };
@@ -141,12 +167,12 @@ export default function NutritionPage() {
 
   const fetchMyRecettes = async () => {
     const p = await nutrition.getAllUserNutritions();
-    console.log("🚀 ~ file: NutritionPage.js:104 ~ fetchMyRecettes ~ p:", p);
+    // console.log("🚀 ~ file: NutritionPage.js:104 ~ fetchMyRecettes ~ p:", p);
     setMyRecettes(p);
   };
 
-  const fetchUsers = () => {
-    const users = fetchData(API_URL + "/users", Basicoptions);
+  const fetchUsers = async () => {
+    const users = await usersAPI.getUsers();
     setUsers(users);
   };
 
@@ -175,7 +201,7 @@ export default function NutritionPage() {
 
   const handleSubmit = (values, { resetForm }) => {
     // Handle form submission
-    values["UserId"] = user.id;
+    values["UserId"] = user.trainerId;
     console.log(values);
     createRecette(values);
     resetForm();
@@ -238,7 +264,7 @@ export default function NutritionPage() {
                                 value={option}
                                 selected={option === `studentIds[${index}]`}
                               >
-                                {option}
+                                {getStudents(option)}
                               </MenuItem>
                             ))}
                           </Select>
@@ -278,7 +304,7 @@ export default function NutritionPage() {
                                             />
 
                                             <label>Ingredients:</label>
-                                            
+
                                             <Select
                                               className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                               name={`instructions[${index}].produits[${pIndex}].ingredients`}
