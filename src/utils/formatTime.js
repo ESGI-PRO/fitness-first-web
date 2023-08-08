@@ -1,4 +1,4 @@
-import { format,  formatDistanceToNow } from 'date-fns';
+import { addDays, addMonths, addYears, format,  formatDistanceToNow } from 'date-fns';
 import moment from 'moment';
 
 export function fDate(date, newFormat) {
@@ -8,7 +8,7 @@ export function fDate(date, newFormat) {
 }
 
 export function fDateTime(date, newFormat) {
-  const fm = newFormat || 'dd MMM yyyy p';
+  const fm = newFormat || 'dd MMM yyyy  p';
 
   return date ? format(new Date(date), fm) : '';
 }
@@ -23,4 +23,12 @@ export function fToNow(date) {
         addSuffix: true,
       })
     : '';
+}
+
+export function fAddMonths(date, months) {
+  return addMonths(new Date(date), months);
+}
+
+export function fAddYears(date, years) {
+  return addYears(new Date(date), years);
 }

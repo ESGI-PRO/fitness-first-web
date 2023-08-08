@@ -158,6 +158,8 @@ export default function SubscriptionCard({close}) {
                   >
                     <a
                     href={tier.paymentLink}
+                    target='_blank'
+                    onClick={() => close()}
                     >
                     {tier.buttonText}
                     </a>

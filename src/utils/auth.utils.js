@@ -1,9 +1,9 @@
 /**
  * Checks if user is authenticated
  */
-const isUserAuthenticated = () => {
+const isUserAuthenticated = async () => {
     const user = getLoggedInUser();
-    const tokens = getTokens();
+    const tokens = await getTokens();
     if (!user || !tokens || !tokens.access || !tokens.refresh) {
         return false;
     }

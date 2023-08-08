@@ -50,13 +50,13 @@ function OpponentList({openChat}) {
                     </div>
                 </div>
                 {
-                index !== rooms.length - 1 && <div className='my-4 w-full grayColorBackground' style={{height: 0.5}}/>
+                index !== rooms.length - 1 && <div className='my-8 w-full grayColorBackground' style={{height: 0.5}}/>
                 }
             </div>
         )
     }
     return (
-        <div className="flex flex-1 mt-8" >
+        <div className="flex flex-1 mt-8  flex-col" >
            {
                 rooms.map((item, index) => {
                     return (

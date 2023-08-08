@@ -38,7 +38,7 @@ export const AppStateContextProvider = ({ children }) => {
     if(!appState?.user){
       initializeApp()
     }
-  }, [appState])
+  }, [])
 
   return (
     <Provider
