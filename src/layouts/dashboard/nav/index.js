@@ -24,6 +24,7 @@ const NAV_WIDTH = 280;
 const StyledAccount = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
+  flexDirection: 'column',
   padding: theme.spacing(2, 2.5),
   borderRadius: Number(theme.shape.borderRadius) * 1.5,
   backgroundColor: alpha(theme.palette.grey[500], 0.12),
@@ -57,21 +58,33 @@ export default function Nav({ openNav, onCloseNav }) {
       <img src={Logo} alt="logo" style={{ width: '120px', height: '60px', margin: '20px 20px' }} />
 
       <Box sx={{ mb: 5, mx: 3 }}>
+      <StyledAccount >
+
         <Link underline="none">
-          <StyledAccount>
+          <div className='flex flex-row'>
             <Avatar src={account.photoURL} alt="photoURL" />
 
             <Box sx={{ ml: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+
+              <p className='blackColor14Medium'>
                 {user?.userName}
-              </Typography>
+              </p>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 {user?.email}
               </Typography>
+
+              <div className='flex w-full'>
+        {
+            user?.trainerSpeciality && <p className='primaryColor10SemiBold'>
+                {
+               user?.trainerSpeciality
+            } TRAINER</p>}
+        </div>
             </Box>
-          </StyledAccount>
+          </div>
         </Link>
+        </StyledAccount>
       </Box>
 
       <NavSection data={navConfig(user)} />

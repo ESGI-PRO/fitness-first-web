@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 // @mui
 import {useAppState} from '../../context/app-state-context';
@@ -17,11 +17,15 @@ export default function MeetingPage() {
     const modal = useModal();
     const {appState, setAppState} = useAppState();
 
-    React.useEffect(() => {
+    useEffect(() => {
         const init = async () => {
-            const meetings = await meetingService.getAllUserMeetings(user ?. id) || [];
+         try{
+            const meetings = await meetingService.getAllUserMeetings(user?.id) || [];
             console.log("meetings", user, meetings);
             setAppState({meetings: meetings})
+         }catch(error){
+             console.log("error", error);
+         }
         };
         init();
     }, []);
@@ -48,9 +52,7 @@ export default function MeetingPage() {
             <div className='mx-4'>
                 <div className='flex flex-row items-center'>
                     <div>
-                        <img src={
-                                getRandomeUserImage()
-                            }
+                        <img src={getRandomeUserImage()}
                             className='h-8 w-8 rounded-full'/>
                     </div>
                     <div className='flex flex-row justify-between items-end w-full ml-4'>
@@ -100,14 +102,17 @@ export default function MeetingPage() {
     }
 
     return (
-        <div className='flex flex-col items-center'>
+        <div className='flex flex-col items-center  w-full '>
 
             <div className='flex flex-col  box-screen-height mt-24 w-3/4'>
 
                 {
-                appState ?. meetings && appState ?. meetings.length > 0 ? appState.meetings.map((item, index) => <RenderItem item={item} key={index}/>) : <p className='text-center text-5xl w-1/2'>
+                appState?.meetings && appState?.meetings.length > 0 ? appState.meetings.map((item, index) => <RenderItem item={item} key={index}/>) : 
+                <div className='flex items-center justify-center'>
+                    <p className='text-center text-5xl'>
                     You currently have no meetings
                 </p>
+                </div>
             } </div>
         </div>
     );

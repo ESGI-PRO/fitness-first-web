@@ -3,15 +3,16 @@ import { Navigate, useRoutes } from 'react-router-dom';
 // layouts
 import DashboardLayout from './layouts/dashboard';
 //
-import BlogPage from './pages/BlogPage';
+import ProfilePage from './pages/ProfilePage';
 import MessengerPage from './pages/messenger/MessengerPage';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
-import ProductsPage from './pages/ProductsPage';
+import TrainingPage from './pages/training/index';
 import MeetingPage from './pages/meeting/index';
 import ExerciseDetail from './pages/ExerciseDetail';
 import Home from './pages/Home';
 import SignUpPage from './pages/SignupPage';
+import NutritionPage from './pages/nutrition';
 
 
 export default function Router() {
@@ -31,8 +32,9 @@ export default function Router() {
         { element: <Navigate to="/dashboard/meeting" />, index: true },
         { path: 'meeting', element: <MeetingPage /> },
         { path: 'messenger', element: <MessengerPage /> },
-        { path: 'products', element: <ProductsPage /> },
-        { path: 'blog', element: <BlogPage /> },
+        { path: 'training', element: <TrainingPage /> },
+        { path: 'nutrition', element: <NutritionPage /> },
+        { path: 'profile', element: <ProfilePage /> },
       ],
     },
     {

@@ -18,23 +18,18 @@ const navConfig =  (user) => {
       icon: icon('ic_messenger'),
     },
     {
-      title: user?.isTrainer ? 'my trainees' : 'my trainer',
-      path: `/dashboard/${user?.isTrainer ? 'my_trainees' : 'my_trainer'}`,
-      icon:  user?.isTrainer ? icon('ic_users') : icon('ic_user'),
-    },
-    {
       title: 'training',
-      path: '/dashboard/products',
+      path: '/dashboard/training',
       icon: icon('ic_training'),
     },
     {
       title: 'nutrition',
-      path: '/login',
+      path: '/dashboard/nutrition',
       icon: icon('ic_nutrition'),
     },
     {
       title: 'profile',
-      path: '/404',
+      path: '/dashboard/profile',
       icon: icon('ic_profile'),
     },
   ];
