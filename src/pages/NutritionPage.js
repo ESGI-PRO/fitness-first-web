@@ -107,7 +107,6 @@ export default function NutritionPage() {
       <div className="w-full flex-col bg-white rounded-lg shadow-md p-4 m-4">
         <h2 className="text-xl font-bold mb-2">{recipe.title}</h2>
         {/* Afficher d'autres informations de la recette ici */}
-       
 
         <div>
         <Link to={`view/${recipe.id}`}>
@@ -217,21 +216,17 @@ export default function NutritionPage() {
 
       <Container maxWidth="xl">
         <div className="flex justify-between my-5">
-          <Typography variant="h4" sx={{ mb: 5 }}>
-            Mes recettes ({MyRecettes?.length})
+          <Typography variant="h4" >
+            Mes recettes ({MyRecettes?.length || 0 })
           </Typography>
-          <button
-            onClick={() => setOpen(!open)}
-            className={
-              isTrainer === false
-                ? "hidden"
-                : "text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800"
-            }
-          >
-            {open === false ? "Add" : "Close"}
+
+          <button  onClick={() => setOpen(!open)}
+                            className={"px-8 py-2 flex items-center cursor-pointer  primaryColorBackground"}>
+                          <p className="whiteColor14Medium">
+                          {open === false ? "Add" : "Close"}
+                          </p>
           </button>
         </div>
-        {JSON.stringify(user)}
 
         <div className={open === false ? "" : "hidden"}>
           <RecipeList />
@@ -241,22 +236,25 @@ export default function NutritionPage() {
           <Formik initialValues={initialValues} onSubmit={handleSubmit}>
             {({ values, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
-                <label htmlFor="title">Title:</label>
-                <Field
-                  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  type="text"
-                  id="title"
-                  name="title"
-                />
 
-                <div className="m-5">
+               <div className="flex flex-col">
+                <label htmlFor="title" className="font-bold text-md">Title:</label>
+                  <Field
+                    className="shadow-sm py-2 px-2 mt-2"
+                    type="text"
+                    id="title"
+                    name="title"
+                  />
+               </div>
+
+                <div className="my-2">
                   <label htmlFor="StudentIds">Mes eleves :</label>
                   <FieldArray name="StudentIds">
                     {({ push, remove }) => (
                       <div>
                         {values.studentIds.map((studentId, index) => (
                           <Select
-                            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            className="shadow-sm w-full"
                             onChange={handleChange}
                             name={`studentIds[${index}]`}
                           >
@@ -275,15 +273,17 @@ export default function NutritionPage() {
                     )}
                   </FieldArray>
                 </div>
-                <div className="m-5">
+
+
+                <div className="my-5">
                   <FieldArray name="instructions">
                     {({ push, remove }) => (
                       <div>
                         {values.instructions.map((instruction, index) => (
-                          <div className="m-5">
+                          <div className="my-5">
                             <div
                               key={index}
-                              class="flex-col items-start justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex dark:border-gray-700 sm:p-6 dark:bg-gray-800"
+                              class="flex-col items-start justify-between px-8 py-4 shadow w-full"
                             >
                               <h3 class="text-base font-normal text-gray-500 dark:text-gray-400">
                                 Etape {index + 1}
@@ -293,22 +293,29 @@ export default function NutritionPage() {
                                 name={`instructions[${index}].produits`}
                               >
                                 {({ push, remove }) => (
-                                  <div className="grid grid-cols-4 m-3">
-                                    {instruction.produits.map(
+                                  <div className="w-full justify-between flex flex-row my-3">
+                          
+<div className="flex flex-row w-full justify-between">
+<div>
+                          {instruction.produits.map(
                                       (produit, pIndex) => (
-                                        <div key={pIndex} className="mx-4">
-                                          <div className="">
-                                            <label>Quantite en gr </label>
+                                        <div key={pIndex} className="mr-4">
+                                          <div >
+
+                                         <div className="flex flex-col my-2">
+                                         <label className="mb-2">Quantite en gr </label>
                                             <Field
                                               type="number"
-                                              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                              className="shadow-sm"
                                               name={`instructions[${index}].produits[${pIndex}].quantite`}
                                             />
+                                            </div>
 
-                                            <label>Ingredients:</label>
+                                            <div className="flex flex-col my-2">
+                                            <label className="mb-2">Ingredients:</label>
 
                                             <Select
-                                              className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                              className="shadow-sm"
                                               name={`instructions[${index}].produits[${pIndex}].ingredients`}
                                               onChange={handleChange}
                                             >
@@ -325,11 +332,11 @@ export default function NutritionPage() {
                                                 </MenuItem>
                                               ))}
                                             </Select>
+                                            </div>
 
                                             <button
-                                              type="button"
                                               onClick={() => remove(pIndex)}
-                                              className="shadow-sm w-36 m-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2.5 dark:bg-red-700 dark:border-red-600 dark:placeholder-red-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                              className="shadow-sm px-4 py-2 my-4 bg-red-400"
                                             >
                                               Supprimer ingredient
                                             </button>
@@ -337,9 +344,11 @@ export default function NutritionPage() {
                                         </div>
                                       )
                                     )}
+                          </div>
+
                                     <button
-                                      type="button"
-                                      className="shadow-sm w-36 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    
+                                      className="shadow-sm w-36 h-12 primaryColorBackground"
                                       onClick={() =>
                                         push({
                                           quantite: 0,
@@ -347,30 +356,36 @@ export default function NutritionPage() {
                                         })
                                       }
                                     >
-                                      Add Produit
+                                           <p className="whiteColor14Medium">
+                                           Add Produit
+                                           </p>
+                             
                                     </button>
+</div>
+
                                   </div>
                                 )}
                               </FieldArray>
 
-                              <label>Description:</label>
+                              <div className="flex flex-col my-2">
+                              <label className="mb-2">Description:</label>
                               <textarea
-                                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                className="shadow-sm w-full"
                                 name={`instructions[${index}].description`}
                               />
+                              </div>
 
                               <button
-                                type="button"
                                 onClick={() => remove(index)}
-                                className="shadow-sm w-36 m-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2.5 dark:bg-red-700 dark:border-red-600 dark:placeholder-red-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                className="shadow-sm px-4 py-2 my-4 bg-red-400"
                               >
                                 Remove
                               </button>
                             </div>
                           </div>
                         ))}
-                        <button
-                          type="button"
+                    <div className="flex flex-row  justify-end w-full">
+                    <button
                           onClick={() =>
                             push({
                               order: values.instructions?.length,
@@ -383,10 +398,13 @@ export default function NutritionPage() {
                               description: "",
                             })
                           }
-                          className="text-white m-5 bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800"
+                          className="shadow-sm w-36 h-12 bg-green-400"
                         >
-                          Add Instruction
+                                     <p className="whiteColor14Medium">
+                                      Add Instruction
+                                     </p>
                         </button>
+                    </div>
                       </div>
                     )}
                   </FieldArray>
@@ -394,9 +412,12 @@ export default function NutritionPage() {
 
                 <button
                   type="submit"
-                  className="text-white w-full bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800"
+                  className="text-white w-full h-12 "
+                  style={{ backgroundColor: "#FA9C7A" }}
                 >
+                  <p className="whiteColor14Medium">
                   creer ma recette
+                  </p>
                 </button>
               </form>
             )}
