@@ -14,6 +14,13 @@ export const GET_ALL_USER_MEETING_URL = '/messenger/get_all_meetings'
 export const GET_TWILIO_TOKEN = '/messenger/get_twilio_token'
 export const GET_USERS_BY_IDS = '/users/get_users_by_ids'
 
+// nutrition urls
+export const CREATE_RECETTE_URL = '/nutrition/ingredients'
+export const RECETTE_URL = '/nutrition'
+
+
+// users urls
+export const USERS_URL = '/users'
 // messenger urls
 export const GET_ALL_USER_MESSAGES_URL = '/messenger/get_room_messages'
 export const GET_ALL_USER_ROOMS_URL = '/messenger/get_all_rooms'
