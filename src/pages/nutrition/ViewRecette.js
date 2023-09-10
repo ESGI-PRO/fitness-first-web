@@ -10,14 +10,20 @@ import usersAPI from "../../services/api/users.service";
 
 export default function ViewRecette() {
   const [showDetails, setShowDetails] = useState([]);
-  const [users, setUsers] = useState(usersAPI.users);
+  const [users, setUsers] = useState([]);
   const [ingredients, setIngredients] = useState(nutrition.ingredients);
   const { id } = useParams();
 
   useEffect(() => {
     getRecette();
+    fetchUsers();
     console.log(ingredients);
   }, []);
+
+  const fetchUsers = async () => {
+    const users = await usersAPI.getUsers();
+    setUsers(users);
+  };
 
   const getRecette = async () => {
     const p = await nutrition.getRecetteByID(id);
@@ -40,7 +46,7 @@ export default function ViewRecette() {
 
   return (
     <div>
-      {JSON.stringify(showDetails.studentIds)}
+      {/* {JSON.stringify(showDetails.studentIds)} */}
 
       <div className=" flex-col">
         <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
@@ -49,18 +55,24 @@ export default function ViewRecette() {
 
         <br />
 
-        <h1 class="text-xl pb-6 font-semibold text-gray-900 sm:text-xl dark:text-white">
-          Les eleves concernées :
-        </h1>
-        <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
-          {showDetails.studentIds?.length > 1 ? (
-            showDetails.studentIds.map((studentId) => (
-              <li>{getStudent(studentId)}</li>
-            ))
-          ) : (
-            <li>{getStudent(showDetails.studentIds)}</li>
-          )}
-        </ul>
+        {showDetails.studentIds?.length > 1 ? (
+          <>
+            <h1 class="text-xl pb-6 font-semibold text-gray-900 sm:text-xl dark:text-white">
+              Les eleves concernées :
+            </h1>
+            <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+              {showDetails.studentIds?.length > 1 ? (
+                showDetails.studentIds.map((studentId) => (
+                  <li>{getStudent(studentId)}</li>
+                ))
+              ) : (
+                <li>{getStudent(showDetails.studentIds)}</li>
+              )}
+            </ul>
+          </>
+        ) : (
+          ""
+        )}
 
         {showDetails.instructions?.map((recipe, index) => (
           <div class="p-4 w-full mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
