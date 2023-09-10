@@ -31,15 +31,13 @@ export default function Router() {
       path: "/dashboard",
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/dashboard/app" />, index: true },
+        { element: <Navigate to="/dashboard/meeting" />, index: true },
         {
           path: "nutrition",
           element: <NutritionPage />,
-          // children: [{ path: "view/:id", element: <ViewRecette /> }],
         },
         { path: "nutrition/view/:id", element: <ViewRecette /> },
         { path: "nutrition/edit/:id", element: <EditRecette /> },
-        { element: <Navigate to="/dashboard/meeting" />, index: true },
         { path: 'meeting', element: <MeetingPage /> },
         { path: 'messenger', element: <MessengerPage /> },
         { path: 'training', element: <TrainingPage /> },

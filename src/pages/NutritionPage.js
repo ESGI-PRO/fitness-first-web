@@ -218,7 +218,7 @@ export default function NutritionPage() {
       <Container maxWidth="xl">
         <div className="flex justify-between my-5">
           <Typography variant="h4" sx={{ mb: 5 }}>
-            Mes recettes ({MyRecettes.length})
+            Mes recettes ({MyRecettes?.length})
           </Typography>
           <button
             onClick={() => setOpen(!open)}
@@ -373,7 +373,7 @@ export default function NutritionPage() {
                           type="button"
                           onClick={() =>
                             push({
-                              order: values.instructions.length,
+                              order: values.instructions?.length,
                               produits: [
                                 {
                                   quantite: "",
