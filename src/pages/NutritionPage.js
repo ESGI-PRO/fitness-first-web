@@ -110,32 +110,32 @@ export default function NutritionPage() {
 
         <div>
         <Link to={`view/${recipe.id}`}>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <div className="cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Voir la recette
-          </button>
+          </div>
         </Link>
           <Link to={`edit/${recipe.id}`} state={{ recipe: recipe }}>
-            <button
+            <div
               className={
                 isTrainer === true
-                  ? "mx-3 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+                  ? "cursor-pointer mx-3 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
                   : "hidden"
               }
             >
               Modifier la recette
-            </button>
+            </div>
           </Link>
 
-          <button
+          <div
             className={
               isTrainer === true
-                ? "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded "
+                ? "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
                 : "hidden"
             }
             onClick={() => deleteRecette(recipe.id)}
           >
             supprimer la recette
-          </button>
+          </div>
         </div>
 
         <br />
@@ -220,12 +220,12 @@ export default function NutritionPage() {
             Mes recettes ({MyRecettes?.length || 0 })
           </Typography>
 
-          <button  onClick={() => setOpen(!open)}
-                            className={"px-8 py-2 flex items-center cursor-pointer  primaryColorBackground"}>
+          <div  onClick={() => setOpen(!open)}
+                            className={"px-8 py-2 flex items-center cursor-pointer  primaryColorBackground cursor-pointer"}>
                           <p className="whiteColor14Medium">
                           {open === false ? "Add" : "Close"}
                           </p>
-          </button>
+          </div>
         </div>
 
         <div className={open === false ? "" : "hidden"}>
@@ -334,21 +334,24 @@ export default function NutritionPage() {
                                             </Select>
                                             </div>
 
-                                            <button
+                                            <div
                                               onClick={() => remove(pIndex)}
-                                              className="shadow-sm px-4 py-2 my-4 bg-red-400"
+                                              className="shadow-sm px-4 py-2 my-4 bg-red-400 cursor-pointer"
                                             >
-                                              Supprimer ingredient
-                                            </button>
+                                               <p className="whiteColor14Medium">
+                                                Supprimer ingredient
+                                               </p>
+                                      
+                                            </div>
                                           </div>
                                         </div>
                                       )
                                     )}
                           </div>
 
-                                    <button
+                                    <div
                                     
-                                      className="shadow-sm w-36 h-12 primaryColorBackground"
+                                      className="flex flex-col justify-center text-center shadow-sm w-36 h-12 primaryColorBackground cursor-pointer"
                                       onClick={() =>
                                         push({
                                           quantite: 0,
@@ -360,7 +363,7 @@ export default function NutritionPage() {
                                            Add Produit
                                            </p>
                              
-                                    </button>
+                                    </div>
 </div>
 
                                   </div>
@@ -370,22 +373,24 @@ export default function NutritionPage() {
                               <div className="flex flex-col my-2">
                               <label className="mb-2">Description:</label>
                               <textarea
-                                className="shadow-sm w-full"
+                                className="shadow-sm "
                                 name={`instructions[${index}].description`}
                               />
                               </div>
 
-                              <button
+                              <div
                                 onClick={() => remove(index)}
-                                className="shadow-sm px-4 py-2 my-4 bg-red-400"
+                                className="shadow-sm px-4 py-2 my-4 bg-red-400 cursor-pointer w-48 text-center"
                               >
-                                Remove
-                              </button>
+                                <p className="whiteColor14Medium">
+                                Remove Instruction
+                                </p>
+                              </div>
                             </div>
                           </div>
                         ))}
                     <div className="flex flex-row  justify-end w-full">
-                    <button
+                    <div
                           onClick={() =>
                             push({
                               order: values.instructions?.length,
@@ -398,12 +403,12 @@ export default function NutritionPage() {
                               description: "",
                             })
                           }
-                          className="shadow-sm w-36 h-12 bg-green-400"
+                          className="flex flex-col justify-center text-center shadow-sm w-36 h-12 bg-green-400 cursor-pointer"
                         >
                                      <p className="whiteColor14Medium">
                                       Add Instruction
                                      </p>
-                        </button>
+                        </div>
                     </div>
                       </div>
                     )}
@@ -415,7 +420,7 @@ export default function NutritionPage() {
                   className="text-white w-full h-12 "
                   style={{ backgroundColor: "#FA9C7A" }}
                 >
-                  <p className="whiteColor14Medium">
+                  <p className="whiteColor16Medium">
                   creer ma recette
                   </p>
                 </button>
