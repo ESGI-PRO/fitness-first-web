@@ -9,7 +9,7 @@ class usersService {
   users = [];
 
   constructor() {
-    this.getUsers().then(users => this.users.push(...users));
+    // this.getUsers().then(users => this.users.push(...users));
   }
 
   async getUsers() {
