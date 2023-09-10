@@ -75,7 +75,7 @@ export default function NutritionPage() {
 
   const initialValues = {
     title: "Ma premiere recette de nutrition pour mes eleves !",
-    UserId: user.id ? user.id : userID,
+    UserId: JSON.stringify(user.id) ? JSON.stringify(user.id) : userID,
     studentIds: [""],
     instructions: [
       {
@@ -207,7 +207,7 @@ export default function NutritionPage() {
 
   const handleSubmit = (values, { resetForm }) => {
     // Handle form submission
-    values["UserId"] = user.trainerId;
+    values["UserId"] = user.isTrainer && user.isTrainer === true ? user.id : user.trainerId
     console.log(values);
     createRecette(values);
     resetForm();
@@ -223,6 +223,7 @@ export default function NutritionPage() {
         <div className="flex justify-between my-5">
           <Typography variant="h4">
             Mes recettes ({MyRecettes?.length || 0})
+
           </Typography>
 
           <div
@@ -236,6 +237,9 @@ export default function NutritionPage() {
             </p>
           </div>
         </div>
+
+        {JSON.stringify(user)}
+
 
         <div className={open === false ? "" : "hidden"}>
           <RecipeList />
