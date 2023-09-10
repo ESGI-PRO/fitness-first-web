@@ -15,7 +15,7 @@ import usersAPI from "../../services/api/users.service";
 const user = await storage.getItem("user");
 export default function EditRecette({ recipe }) {
   const [ingredients, setIngredients] = useState(nutrition.ingredients);
-  const [users, setUsers] = useState(usersAPI.users);
+  const [users, setUsers] = useState([]);
   const { id } = useParams();
   let { state } = useLocation();
   const [initialValues, setInitialValues] = useState(state.recipe);
@@ -23,13 +23,14 @@ export default function EditRecette({ recipe }) {
 
   useEffect(() => {
     getRecette();
+    fetchUsers();
     console.log(state);
   }, []);
 
   const handleSubmit = (values, { resetForm }) => {
     // Handle form submission
     // values["UserId"] = user.id;
-    values["studentIds"] = [...values["studentIds"]]
+    values["studentIds"] = [...values["studentIds"]];
     console.log(values);
 
     nutrition.updateNutrition(values).then(() => {
@@ -55,10 +56,15 @@ export default function EditRecette({ recipe }) {
     return p?.name;
   };
 
+  const fetchUsers = async () => {
+    const users = await usersAPI.getUsers();
+    setUsers(users);
+  };
+
   const getStudents = (id) => {
-    var m = users.find((it) => it.id === id)
-    return m.userName
-  }
+    var m = users?.find((it) => it.id === id);
+    return m?.userName;
+  };
 
   return (
     <div>
@@ -67,22 +73,21 @@ export default function EditRecette({ recipe }) {
 
       <div className="flex row items-center mb-9 ">
         <Link to="/dashboard/nutrition">
-
-        <svg
-          class="w-6 h-6 text-gray-800 dark:text-white"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 8 14"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"
-          ></path>
-        </svg>
+          <svg
+            class="w-6 h-6 text-gray-800 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 8 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"
+            ></path>
+          </svg>
         </Link>
 
         <h3 class="mb-1 mx-5 text-4xl font-bold text-gray-900 dark:text-white">
@@ -90,7 +95,7 @@ export default function EditRecette({ recipe }) {
         </h3>
       </div>
 
-      <hr/>
+      <hr />
 
       <div className={open ? "my-5" : "hidden"}>
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
@@ -187,9 +192,11 @@ export default function EditRecette({ recipe }) {
                                           <button
                                             type="button"
                                             onClick={() => remove(pIndex)}
-                                            className="shadow-sm w-36 my-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2.5 dark:bg-red-700 dark:border-red-600 dark:placeholder-red-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            className=" whiteColor14Medium shadow-sm w-36 my-4 bg-red-400 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2.5 dark:bg-red-700 dark:border-red-600 dark:placeholder-red-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                           >
-                                            Supprimer ingredient
+                                            <p className="whiteColor14Medium">
+                                              Supprimer ingredient
+                                            </p>
                                           </button>
                                         </div>
                                       </div>
@@ -221,9 +228,9 @@ export default function EditRecette({ recipe }) {
                             <button
                               type="button"
                               onClick={() => remove(index)}
-                              className="shadow-sm w-36 m-4 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2.5 dark:bg-red-700 dark:border-red-600 dark:placeholder-red-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                              className="shadow-sm w-36 m-4 bg-red-400 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2.5 dark:bg-red-700 dark:border-red-600 dark:placeholder-red-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             >
-                              Supprimer
+                              <p className="whiteColor14Medium">Supprimer</p>
                             </button>
                           </div>
                         </div>
@@ -242,7 +249,7 @@ export default function EditRecette({ recipe }) {
                             description: "",
                           })
                         }
-                        className="text-white m-5 bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800"
+                        className="text-white m-5 bg-green-400  hover:bg-green-400  focus:ring-4 focus:ring-slate-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
                       >
                         Ajouter une etape
                       </button>
@@ -253,9 +260,10 @@ export default function EditRecette({ recipe }) {
 
               <button
                 type="submit"
-                className="text-white w-full bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:ring-slate-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800"
+                style={{ backgroundColor: "#FA9C7A" }}
+                className="flex flex-col justify-center items-center text-center shadow-sm w-full h-12 cursor-pointer"
               >
-                Modifier ma recette
+                <p className="whiteColor14Medium">Modifier ma recette</p>
               </button>
             </form>
           )}
