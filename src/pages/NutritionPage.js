@@ -20,7 +20,7 @@ import usersAPI from "../services/api/users.service";
 const API_URL = "http://localhost:8000";
 
 export default function NutritionPage() {
-  const [users, setUsers] = useState(usersAPI.users);
+  const [users, setUsers] = useState([]);
   const [MyRecettes, setMyRecettes] = useState([]);
   const [user, setUser] = useState([]);
   const [token, setToken] = useState("");
@@ -53,6 +53,7 @@ export default function NutritionPage() {
         Basicoptions.headers.Authorization = `Bearer ${infos}`;
         fetchIngredients();
         fetchMyRecettes();
+        fetchUsers()
         setTrainer(user?.isTrainer);
       } else {
         basic();
@@ -164,6 +165,7 @@ export default function NutritionPage() {
 
     setIngredients(p);
   };
+
 
   const fetchMyRecettes = async () => {
     const p = await nutrition.getAllUserNutritions();

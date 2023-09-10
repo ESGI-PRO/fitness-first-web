@@ -15,15 +15,15 @@ class NutritionService {
   recettes = [];
 
   constructor() {
-    this.ingredients = [];
-    this.recettes = [];
-    this.myRecettes = [];
-    this.getIngredients().then((res) => this.ingredients.push(...res));
+    // this.ingredients = [];
+    // this.recettes = [];
+    // this.myRecettes = [];
+    // this.getIngredients().then((res) => this.ingredients.push(...res));
 
-    if (user?.id !== null) {
-      this.getAllUserNutritions().then((res) => this.myRecettes.push(...res));
-      this.getRecettes().then((res) => this.recettes.push(...res));
-    }
+    // if (user?.id !== null) {
+    //   this.getAllUserNutritions().then((res) => this.myRecettes.push(...res));
+    //   this.getRecettes().then((res) => this.recettes.push(...res));
+    // }
   }
 
   async getRecettes() {

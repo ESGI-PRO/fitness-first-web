@@ -12,7 +12,7 @@ import MeetingPage from './pages/meeting/index';
 import ExerciseDetail from './pages/ExerciseDetail';
 import Home from './pages/Home';
 import SignUpPage from './pages/SignupPage';
-import NutritionPage from './pages/nutrition';
+import NutritionPage from './pages/NutritionPage';
 
 import ViewRecette from "./pages/nutrition/ViewRecette";
 import EditRecette from "./pages/nutrition/EditRecette";
@@ -39,7 +39,6 @@ export default function Router() {
         },
         { path: "nutrition/view/:id", element: <ViewRecette /> },
         { path: "nutrition/edit/:id", element: <EditRecette /> },
-        { path: "blog", element: <BlogPage /> },
         { element: <Navigate to="/dashboard/meeting" />, index: true },
         { path: 'meeting', element: <MeetingPage /> },
         { path: 'messenger', element: <MessengerPage /> },
