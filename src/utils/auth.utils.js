@@ -1,9 +1,9 @@
 /**
  * Checks if user is authenticated
  */
-const isUserAuthenticated = () => {
+const isUserAuthenticated = async () => {
     const user = getLoggedInUser();
-    const tokens = getTokens();
+    const tokens = await getTokens();
     if (!user || !tokens || !tokens.access || !tokens.refresh) {
         return false;
     }
@@ -23,8 +23,8 @@ const isUserAuthenticated = () => {
 /**
  * Sets the logged in user
  */
-const setLoggedInUser = async (user) => {
-    await localStorage.setItem('user', JSON.stringify(user));
+const setLoggedInUser =  (user) => {
+  localStorage.setItem('user', JSON.stringify(user));
 }
 
 /**
@@ -37,8 +37,8 @@ const setLoggedInUser = async (user) => {
 /**
  * Returns the logged in user
  */
-const getLoggedInUser = async () => {
-    const user = await localStorage.getItem('user');
+const getLoggedInUser = () => {
+    const user = localStorage.getItem('user');
     return user ? (typeof (user) == 'object' ? user : JSON.parse(user)) : null;
 }
 
@@ -46,7 +46,7 @@ const getLoggedInUser = async () => {
  * Returns tokens
  */
  const getTokens = async () => {
-    const tokens = await localStorage.getItem('tokens');
+    const tokens = localStorage.getItem('tokens');
     console.log("tokens first", tokens)
     return tokens ? (typeof (tokens) == 'object' ? tokens : JSON.parse(tokens)) : null;
 }

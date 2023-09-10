@@ -16,24 +16,24 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
       let exercisesData = [];
 
       if (bodyPart === 'all') {
-        const exercisesDataBefore = await storage.getItem('exercises');
-
-        if (exercisesDataBefore) {
+        const exercisesDataBefore = JSON.parse(localStorage.getItem('exercises'));
+        if (exercisesDataBefore && exercisesDataBefore.length > 0) {
           exercisesData = exercisesDataBefore;
         } else {
           exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises', exerciseOptions);
-          await storage.setItem('exercises', exercisesData);
+          localStorage.setItem('exercises', JSON.stringify(exercisesData));
         }
       } else {
-        const exercisesDataBefore = await storage.getItem('bodyPart');
-        if (exercisesDataBefore) {
+        const exercisesDataBefore = JSON.parse(localStorage.getItem('bodyPart'));
+        if (exercisesDataBefore && exercisesDataBefore.length > 0) {
           exercisesData = exercisesDataBefore;
         }else{
           exercisesData = await fetchData(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`, exerciseOptions);
-          await storage.setItem('bodyPart', exercisesData);
+          localStorage.setItem('bodyPart', JSON.stringify(exercisesData));
         }
       }
 
+      console.log(exercisesData);
       setExercises(exercisesData);
     };
 
@@ -43,7 +43,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
   // Pagination
   const indexOfLastExercise = currentPage * exercisesPerPage;
   const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
-  // const currentExercises = exercises.slice(indexOfFirstExercise, indexOfLastExercise);
+  const currentExercises = exercises?.slice(indexOfFirstExercise, indexOfLastExercise);
 
   const paginate = (event, value) => {
     setCurrentPage(value);
@@ -62,12 +62,12 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
         ))} */}
       </Stack>
       <Stack sx={{ mt: { lg: '114px', xs: '70px' } }} alignItems="center">
-        {exercises.length > 9 && (
+        {exercises?.length > 9 && (
           <Pagination
             color="standard"
             shape="rounded"
             defaultPage={1}
-            count={Math.ceil(exercises.length / exercisesPerPage)}
+            count={Math.ceil(exercises?.length / exercisesPerPage)}
             page={currentPage}
             onChange={paginate}
             size="large"

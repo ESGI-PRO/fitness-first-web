@@ -10,11 +10,8 @@ import useResponsive from '../hooks/useResponsive';
 import Logo from '../assets/images/Logo.png';
 // sections
 import  LoginForm  from '../components/auth/login';
-import { isUserAuthenticated } from '../utils/auth.utils';
-import { useAppState } from '../context/app-state-context';
-import { useModal } from '../context/modal-context';
 import AuthService from '../services/api/auth.service';
-import SubscriptionCard from '../components/Subscription';
+
 
 
 // ----------------------------------------------------------------------
@@ -47,28 +44,6 @@ const authService = new AuthService();
 
 export default function LoginPage() {
   const mdUp = useResponsive('up', 'md');
-  const {appState,setAppState} = useAppState();
-  const modal = useModal();
-
-  useEffect(() => {
-    const init = async () => {
-   const isSubscribe = await authService.isSubscribe() || false;
-   console.log('isSubscribe', isSubscribe);
-
-    if (isUserAuthenticated()) {
-      if (isSubscribe) {
-        setAppState({ ...appState, isSubscribe: true });
-        navigate('/dashboard', { replace: true });
-      }else{
-        modal.showModal(<SubscriptionCard
-          close={() => modal.hideModal()}
-        />, true, true);
-      }
-    }
-
-  };
-  init();
-  }, []);
 
 
   return (

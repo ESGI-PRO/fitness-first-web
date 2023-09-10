@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
-import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
+import { Box, Link, Drawer, Typography, Avatar } from '@mui/material';
 // mock
 import account from '../../../_mock/account';
 // hooks
@@ -15,7 +15,7 @@ import Scrollbar from '../../../components/scrollbar';
 import NavSection from '../../../components/nav-section';
 //
 import navConfig from './config';
-import { useAppState } from '../../../context/app-state-context';
+import { getLoggedInUser } from '../../../utils/auth.utils';
 
 // ----------------------------------------------------------------------
 
@@ -24,6 +24,7 @@ const NAV_WIDTH = 280;
 const StyledAccount = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
+  flexDirection: 'column',
   padding: theme.spacing(2, 2.5),
   borderRadius: Number(theme.shape.borderRadius) * 1.5,
   backgroundColor: alpha(theme.palette.grey[500], 0.12),
@@ -38,7 +39,7 @@ Nav.propTypes = {
 
 export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
-  const {appState} = useAppState();
+  const user = getLoggedInUser();
   const isDesktop = useResponsive('up', 'lg');
 
   useEffect(() => {
@@ -57,24 +58,36 @@ export default function Nav({ openNav, onCloseNav }) {
       <img src={Logo} alt="logo" style={{ width: '120px', height: '60px', margin: '20px 20px' }} />
 
       <Box sx={{ mb: 5, mx: 3 }}>
+      <StyledAccount >
+
         <Link underline="none">
-          <StyledAccount>
+          <div className='flex flex-row'>
             <Avatar src={account.photoURL} alt="photoURL" />
 
             <Box sx={{ ml: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {appState?.user?.userName}
-              </Typography>
+
+              <p className='blackColor14Medium'>
+                {user?.userName}
+              </p>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {appState?.user?.email}
+                {user?.email}
               </Typography>
+
+              <div className='flex w-full'>
+        {
+            user?.trainerSpeciality && <p className='primaryColor10SemiBold'>
+                {
+               user?.trainerSpeciality
+            } TRAINER</p>}
+        </div>
             </Box>
-          </StyledAccount>
+          </div>
         </Link>
+        </StyledAccount>
       </Box>
 
-      <NavSection data={navConfig(appState.user)} />
+      <NavSection data={navConfig(user)} />
 
       <Box sx={{ flexGrow: 1 }} />
 

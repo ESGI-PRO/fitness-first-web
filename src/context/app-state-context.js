@@ -35,7 +35,9 @@ export const AppStateContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    initializeApp()
+    if(!appState?.user){
+      initializeApp()
+    }
   }, [])
 
   return (

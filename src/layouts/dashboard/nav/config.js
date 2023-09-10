@@ -3,29 +3,24 @@ import SvgColor from '../../../components/svg-color';
 
 // ----------------------------------------------------------------------
 
-const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />;
+export const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />;
 
 const navConfig =  (user) => {
   return [
     {
       title: 'meetings',
-      path: '/dashboard/app',
+      path: '/dashboard/meeting',
       icon: icon('ic_meeting'),
     },
     {
-      title: user?.isTrainer ? 'my trainees' : 'my trainer',
-      path: '/dashboard/user',
-      icon:  user?.isTrainer ? icon('ic_users') : icon('ic_user'),
+      title: 'messenger',
+      path: '/dashboard/messenger',
+      icon: icon('ic_messenger'),
     },
     {
       title: 'training',
-      path: '/dashboard/products',
+      path: '/dashboard/training',
       icon: icon('ic_training'),
-    },
-    {
-      title: 'messenger',
-      path: '/dashboard/blog',
-      icon: icon('ic_messenger'),
     },
     {
       title: 'nutrition',
@@ -34,7 +29,7 @@ const navConfig =  (user) => {
     },
     {
       title: 'profile',
-      path: '/404',
+      path: '/dashboard/profile',
       icon: icon('ic_profile'),
     },
   ];

@@ -6,7 +6,7 @@ const getHeaders = async () => {
     const tokens = await getTokens();
     console.log("tokens", tokens)
     return tokens?.access?.token ? {
-        'Authorization': `Bearer ` + tokens?.access?.token ,
+        'Authorization': `Bearer ${tokens.access.token}`,
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     } : {
@@ -21,7 +21,6 @@ class APIClient {
      */
     get = async (url, params) => {
         try {
-            console.log("getHeaders", getHeaders())
             const response = await fetch(config.API_URL + url + new URLSearchParams(params), {
                 method: 'GET',
                 headers: await getHeaders(),
@@ -100,10 +99,11 @@ class APIClient {
 const handleErrors = async (response) => {
     console.log("handleErrors-response", response)
  // if not authorized refresh token
-    if (response.message === "token_decode_unauthorized") {
+    if (response?.message === "token_decode_unauthorized") {
 
         const client = new APIClient();
         const tokens = await getTokens();
+        console.log("tokensbro", tokens)
 
         client.post(REFRESH_TOKEN_URL, {
             token: tokens.refresh.token

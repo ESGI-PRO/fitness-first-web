@@ -1,22 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 // @mui
-import { Link, Stack, IconButton, InputAdornment, TextField } from '@mui/material';
+import {  Stack, IconButton, InputAdornment, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // components
 import Iconify from '../../iconify';
 
 import AuthService from '../../../services/api/auth.service';
-import { useAppState } from '../../../context/app-state-context';
 import { colors } from '../../../constants/globals';
-
+import { useAppState } from '../../../context/app-state-context';
+import { useModal } from '../../../context/modal-context';
+import SubscriptionCard from '../../../components/Subscription';
 
 const authService = new AuthService();
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const {setAppState} = useAppState();
+  const modal = useModal();
   const [loading, setLoading] = useState(false);
+  const {setAppState} = useAppState();
   const [showPassword, setShowPassword] = useState(false);
   const [state, setState] = useState({
     email: '',
@@ -36,11 +38,21 @@ export default function LoginForm() {
     authService.login({
       email: state.email,
       password: state.password
-  }).then((res) => {
+  }).then(async (res) => {
         setLoading(false);
-        console.log('res', res);
-        setAppState({user: res.user, tokens: res.tokens, error: res.errors});
-        navigate('/dashboard', { replace: true });
+        if(res.user.isAdmin){
+          alert("You are not allowed to login here");
+          return;
+        }
+        const isSubscribe =  await authService.isSubscribe() || false;
+        if (isSubscribe) {
+          setAppState({isSubscribe: true });
+          navigate('/dashboard', { replace: true });
+        }else{
+          modal.showModal(<SubscriptionCard
+            close={() => modal.hideModal()}
+          />, true, true);
+        }
     }).catch((err) => {
         setLoading(false);
         console.log('err', err);

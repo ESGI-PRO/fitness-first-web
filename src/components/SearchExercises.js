@@ -11,9 +11,13 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
 
   useEffect(() => {
     const fetchExercisesData = async () => {
-      var bodyPartsData = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList', exerciseOptions) || [];
+     let bodyPartsData = JSON.parse(localStorage.getItem('bodyPartsData')) || [];
+     if(bodyPartsData.length === 0){
+        bodyPartsData = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList', exerciseOptions) || [];
+        localStorage.setItem('bodyPartsData', JSON.stringify(['all', ...bodyPartsData]));
+      }
+      setBodyParts(['all', ...bodyPartsData]);
 
-      bodyPartsData ? setBodyParts(['all', ...bodyPartsData]) : ''
     };
 
     fetchExercisesData();

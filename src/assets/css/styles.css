@@ -1,5 +1,11 @@
 
 
+.primaryColor10SemiBold {
+  color: #FA9C7A;
+  font-size: 10px;
+  font-family: Montserrat_SemiBold;
+}
+
 .primaryColor13Medium {
   color: #FA9C7A;
   font-size: 13px;
@@ -115,6 +121,19 @@
   font-size: 18px;
   font-family: Montserrat_Medium;
 }
+
+.blackColor20Medium {
+  color: #000000;
+  font-size: 20px;
+  font-family: Montserrat_Medium;
+}
+
+.blackColor24Medium {
+  color: #000000;
+  font-size: 24px;
+  font-family: Montserrat_Medium;
+}
+
 .blackColor12SemiBold {
   color: #000000;
   font-size: 12px;
@@ -136,6 +155,12 @@
 .blackColor18SemiBold {
   color: #000000;
   font-size: 18px;
+  font-family: Montserrat_SemiBold;
+}
+
+.blackColor24SemiBold {
+  color: #000000;
+  font-size: 24px;
   font-family: Montserrat_SemiBold;
 }
 
@@ -397,4 +422,8 @@
 
 .lightGrayColorBackground {
   background-color: #DFDFDF;
+}
+
+.box-screen-height {
+  height: calc(100vh - 180px);
 }

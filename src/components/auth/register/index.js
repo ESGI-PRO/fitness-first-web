@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // @mui
 import { Link, Stack, IconButton, InputAdornment, TextField, Select, MenuItem } from '@mui/material';
@@ -9,12 +9,13 @@ import Iconify from '../../iconify';
 import AuthService from '../../../services/api/auth.service';
 import { useAppState } from '../../../context/app-state-context';
 import { colors } from '../../../constants/globals';
+import { setLoggedInUser } from '../../../utils/auth.utils';
 
 
 
 const authService = new AuthService();
 
-export default function LoginForm() {
+export default function RegisterForm({update=false, user}) {
   const navigate = useNavigate();
   const {setAppState} = useAppState();
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,18 @@ export default function LoginForm() {
     error: ''
   });
 
+useEffect(() => {
+  if(user){
+    setState({
+      email: user.email || '',
+      password: user.password || '',
+      confirm_password: user.password || '',
+      username: user.userName || '',
+      error: ''
+    })
+  }
+}, [user])
+
   const reset = () => {
     setState({
       email: '',
@@ -41,27 +54,52 @@ export default function LoginForm() {
   }
 
   const register = () => {
-
-    if (!state.email || !state.password || !state.confirm_password || !state.mobile || !state.username) {
-        setState({ ...state, error: 'Please fill all the fields' });
-        return;
+    if(!update){
+      if (!state.email || !state.password || !state.confirm_password || !state.mobile || !state.username) {
+          setState({ ...state, error: 'Please fill all the fields' });
+          return;
+      }
     }
     if(state.password !== state.confirm_password){
         setState({ ...state, error: 'Password and confirm password should be same' });
         return;
     }
-    const data = {
-      userName: state.username,
-      email: state.email,
-      password: state.password,
-      mobileNumber: state.mobile,
-      isTrainer: false,
-  }
 
     setLoading(true);
-    authService.register(data).then((res) => {
+
+    if(update === true){
+      const data = {
+        userName: state.username,
+        email: state.email,
+    }
+    if(state.password){
+      data.password = state.password;
+    }
+  console.log('data', data);
+      authService.updateUser(data, user.id).then((res) => {
         setLoading(false);
-      console.log('res', res);
+        console.log('resherebro', res);
+        reset();
+        setAppState({user: res});
+        setLoggedInUser(res);
+      }).catch((err) => {
+        setLoading(false);
+        setState({ ...state, error: "Something went wrong updating user"});
+        console.log('err', err);
+      })
+      return;
+    }else{
+      const data = {
+        userName: state.username,
+        email: state.email,
+        password: state.password,
+        mobileNumber: state.mobile,
+        isTrainer: false,
+    }
+  
+      authService.register(data).then((res) => {
+        setLoading(false);
+        console.log('res', res);
         reset();
         setAppState({user: res.user, tokens: res.token});
         navigate('/dashboard', { replace: true });
@@ -69,8 +107,9 @@ export default function LoginForm() {
     }).catch((err) => {
         setLoading(false);
         setState({ ...state, error: err.response.errors});
-        console.log('err', err);
     })
+    }
+
 }
 
   const onChange = (e) => {
@@ -83,16 +122,17 @@ export default function LoginForm() {
       <Stack spacing={2}>
 
        {state?.error &&  <p className="text-red-500 text-sm ">{state.error}</p>}
-        <TextField name="username" label="User Name"   onChange={onChange} />
+        <TextField name="username" label="User Name"   onChange={onChange} value={state.username}/>
 
-        <TextField name="mobile" label="Mobile Number" type='number' onChange={onChange}/>
+       {!update && <TextField name="mobile" label="Mobile Number" type='number' onChange={onChange} value={state.mobile}/>}
 
-        <TextField name="email" label="Email address"  onChange={onChange} />
+        <TextField name="email" label="Email address"  onChange={onChange} value={state.email}/>
 
         <TextField
           name="password"
           label="Password"
           type={showPassword ? 'text' : 'password'}
+          value={state.password}
           onChange={onChange}
           InputProps={{
             endAdornment: (
@@ -107,6 +147,7 @@ export default function LoginForm() {
         <TextField
           name="confirm_password"
           label="Confirm Password"
+          value={state.confirm_password}
           type={showConfirmPassword ? 'text' : 'password'}
           onChange={onChange}
           InputProps={{
@@ -137,7 +178,7 @@ export default function LoginForm() {
         },
       }}
       >
-        Login
+       { update ? 'Update' :'Login'}
       </LoadingButton>
     </>
   );
