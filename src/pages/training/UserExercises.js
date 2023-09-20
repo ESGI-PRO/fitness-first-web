@@ -14,7 +14,7 @@ export default function UserTrainingList({setOpenUserList}) {
     const user = getLoggedInUser();
     const {appState} = useAppState();
     const [exercises, setExercises] = useState([]);
-    const currentUser = appState.selectedUser;
+    const currentUser = appState?.selectedUser;
 
 
     useEffect(() => {

@@ -104,7 +104,7 @@ export default function NutritionPage() {
   const RecipeCard = ({ recipe }) => {
     const getCoach = (id) => {
       var m = users.find((it) => it.id === id);
-      return m.userName;
+      return m?.userName ? m.userName : "anonymous"
     };
 
     return (
