@@ -238,7 +238,7 @@ export default function NutritionPage() {
           </div>
         </div>
 
-        {JSON.stringify(user)}
+        {/* {JSON.stringify(user)} */}
 
         <div className={open === false ? "" : "hidden"}>
           <RecipeList />

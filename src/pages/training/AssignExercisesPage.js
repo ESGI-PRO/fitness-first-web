@@ -8,6 +8,7 @@ import ExerciseCard from '../../components/ExerciseCard';
 import {exerciseOptions, fetchData} from '../../utils/fetchData';
 import { useAppState } from '../../context/app-state-context';
 import TrainingService from '../../services/api/training.service';
+import notif from '../../services/alert';
 
 
 const trainingService = new TrainingService();
@@ -25,7 +26,9 @@ export default function AssignExercisesPage({setOpenAssignExercises}) {
         console.log("selectedExercises", selectedExercises);
         await trainingService.createExercises({
             exercises: selectedExercises,
-        });
+        }).then(() => {
+            notif.success('Exercices assigné !')
+        })
     };
 
     const updateTrainings = (exercise) => {
