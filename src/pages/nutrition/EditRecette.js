@@ -14,7 +14,7 @@ import usersAPI from "../../services/api/users.service";
 
 const user = await storage.getItem("user");
 export default function EditRecette({ recipe }) {
-  const [ingredients, setIngredients] = useState(nutrition.ingredients);
+  const [ingredients, setIngredients] = useState([]);
   const [users, setUsers] = useState([]);
   const { id } = useParams();
   let { state } = useLocation();
@@ -24,6 +24,7 @@ export default function EditRecette({ recipe }) {
   useEffect(() => {
     getRecette();
     fetchUsers();
+    fetchIngredients();
     console.log(state);
   }, []);
 
@@ -54,6 +55,11 @@ export default function EditRecette({ recipe }) {
     var p = ingredients.find((ing) => ing.id === id);
     console.log("🚀 ~ file: ViewRecette.js:27 ~ findIngredients ~ p:", p);
     return p?.name;
+  };
+
+  const fetchIngredients = async () => {
+    const ing = await nutrition.getIngredients();
+    setIngredients(ing);
   };
 
   const fetchUsers = async () => {
