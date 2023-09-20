@@ -17,13 +17,13 @@ import NutritionService from "../services/api/nutrition.service";
 import { Link } from "react-router-dom";
 import nutrition from "../services/api/nutrition.service";
 import usersAPI from "../services/api/users.service";
-const API_URL = "http://localhost:8000";
+const API_URL = process.env.API_URL;
 
 export default function NutritionPage() {
   const [users, setUsers] = useState([]);
   const [MyRecettes, setMyRecettes] = useState([]);
   const [user, setUser] = useState([]);
-  const [userID , setUserId] = useState('');
+  const [userID, setUserId] = useState("");
   const [token, setToken] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [open, setOpen] = useState(false);
@@ -48,10 +48,8 @@ export default function NutritionPage() {
       const user = await storage.getItem("user");
       setUser(user);
 
-      const userId = await storage.getUserId()
+      const userId = await storage.getUserId();
       setUserId(userId);
-
-      
 
       // console.log(Basicoptions);
 
@@ -161,6 +159,8 @@ export default function NutritionPage() {
         {MyRecettes?.map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe} />
         ))}
+
+        {MyRecettes?.length === 0 ? "Aucune recette " : ""}
       </div>
     );
   };
@@ -207,7 +207,8 @@ export default function NutritionPage() {
 
   const handleSubmit = (values, { resetForm }) => {
     // Handle form submission
-    values["UserId"] = user.isTrainer && user.isTrainer === true ? user.id : user.trainerId
+    values["UserId"] =
+      user.isTrainer && user.isTrainer === true ? user.id : user.trainerId;
     console.log(values);
     createRecette(values);
     resetForm();
@@ -223,7 +224,6 @@ export default function NutritionPage() {
         <div className="flex justify-between my-5">
           <Typography variant="h4">
             Mes recettes ({MyRecettes?.length || 0})
-
           </Typography>
 
           <div
@@ -239,7 +239,6 @@ export default function NutritionPage() {
         </div>
 
         {JSON.stringify(user)}
-
 
         <div className={open === false ? "" : "hidden"}>
           <RecipeList />
@@ -261,32 +260,36 @@ export default function NutritionPage() {
                   />
                 </div>
 
-                <div className="my-2">
-                  <label htmlFor="StudentIds">Mes eleves :</label>
-                  <FieldArray name="StudentIds">
-                    {({ push, remove }) => (
-                      <div>
-                        {values.studentIds?.map((studentId, index) => (
-                          <Select
-                            className="shadow-sm w-full"
-                            onChange={handleChange}
-                            name={`studentIds[${index}]`}
-                          >
-                            {user.traineeIds?.map((option, index) => (
-                              <MenuItem
-                                key={option}
-                                value={option}
-                                selected={option === `studentIds[${index}]`}
-                              >
-                                {getStudents(option)}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        ))}
-                      </div>
-                    )}
-                  </FieldArray>
-                </div>
+                {user.isTrainer === true ? (
+                  <div className="my-2">
+                    <label htmlFor="StudentIds">Mes eleves :</label>
+                    <FieldArray name="StudentIds">
+                      {({ push, remove }) => (
+                        <div>
+                          {values.studentIds?.map((studentId, index) => (
+                            <Select
+                              className="shadow-sm w-full"
+                              onChange={handleChange}
+                              name={`studentIds[${index}]`}
+                            >
+                              {user.traineeIds?.map((option, index) => (
+                                <MenuItem
+                                  key={option}
+                                  value={option}
+                                  selected={option === `studentIds[${index}]`}
+                                >
+                                  {getStudents(option)}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          ))}
+                        </div>
+                      )}
+                    </FieldArray>
+                  </div>
+                ) : (
+                  ""
+                )}
 
                 <div className="my-5">
                   <FieldArray name="instructions">
