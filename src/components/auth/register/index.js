@@ -101,7 +101,7 @@ useEffect(() => {
         setLoading(false);
         console.log('res', res);
         reset();
-        setAppState({user: res.user, tokens: res.token});
+        // setAppState({user: res.user, tokens: res.token});
         navigate('/login', { replace: true });
 
     }).catch((err) => {

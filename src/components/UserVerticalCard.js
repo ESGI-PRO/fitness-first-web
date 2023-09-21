@@ -8,6 +8,10 @@ function UserVerticalCard(props) {
 
     const getEndDate = (name) => {
         const date = new Date(subscription.currentPeriodStart);
+        if (name === '' || name === null || name === undefined) {
+            name = 'Monthly'
+        }
+        
         switch (name) {
             case 'Monthly':
                 return fDateTime(fAddMonths(date, 1));
