@@ -34,7 +34,7 @@ class Notification {
   }
 
   error(message) {
-    return notification.alert(message);
+    return notification.error(message);
   }
 
   info(message) {
