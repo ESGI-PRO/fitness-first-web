@@ -102,7 +102,7 @@ useEffect(() => {
         console.log('res', res);
         reset();
         setAppState({user: res.user, tokens: res.token});
-        navigate('/dashboard', { replace: true });
+        navigate('/login', { replace: true });
 
     }).catch((err) => {
         setLoading(false);
