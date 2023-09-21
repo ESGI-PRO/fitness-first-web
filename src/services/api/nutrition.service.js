@@ -76,7 +76,7 @@ class NutritionService {
     console.log(
       "user----------------------------------------------------------------"
     );
-    var id = user.trainerId ? user.trainerId : user.id;
+    var id = user.trainerId?.length > 0 ? user.trainerId : user.id;
     const response = await client.get(RECETTE_URL + "/" + id + "/user");
     handleErrors(response);
     var res = response?.data?.nutrition;
