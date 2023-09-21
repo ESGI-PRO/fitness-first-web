@@ -84,8 +84,10 @@ export default function UserTrainingList({setOpenUserList}) {
                 } 
                 </Box> : <div className="flex flex-1 items-center justify-center">
                     <p className='text-xl font-bold ml-4 blackColor14SemiBold my-32'>
-                        No Exercises Found
+                        Pas de Training piur le moment !
+                        Veuillez attendre que votre trainer vous créez un programme
                     </p>
+
                     </div>}
                 </div>
                 </div>
