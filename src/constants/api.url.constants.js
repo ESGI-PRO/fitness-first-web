@@ -29,3 +29,6 @@ export const CREATE_ROOM_URL = '/messenger/create_room'
 
 // training urls
 export const TRAINING_EXERCISES = '/training/exercises'
+
+// subscription urls
+export const SUBSCRIPTION_INVOICE = '/subscription/find-user-invoices'
