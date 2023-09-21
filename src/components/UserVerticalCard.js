@@ -66,7 +66,7 @@ function UserVerticalCard(props) {
                         <span  className='mr-4 blackColor14SemiBold' >Period End:
                         </span>
                         {
-                        getEndDate(subscription.plan.name)
+                        getEndDate(subscription.plan?.name)
                     } </p>
 
                     <p className='blackColor14Medium mt-2'>
