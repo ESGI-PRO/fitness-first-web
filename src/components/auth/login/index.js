@@ -11,6 +11,7 @@ import { colors } from '../../../constants/globals';
 import { useAppState } from '../../../context/app-state-context';
 import { useModal } from '../../../context/modal-context';
 import SubscriptionCard from '../../../components/Subscription';
+import notif from '../../../services/alert';
 
 const authService = new AuthService();
 
@@ -48,6 +49,7 @@ export default function LoginForm() {
         if (isSubscribe) {
           setAppState({isSubscribe: true });
           navigate('/dashboard', { replace: true });
+          notif.success('Connectté !')
         }else{
           modal.showModal(<SubscriptionCard
             close={() => modal.hideModal()}
@@ -56,6 +58,8 @@ export default function LoginForm() {
     }).catch((err) => {
         setLoading(false);
         console.log('err', err);
+        notif.error('Credentials non correcte !')
+
     })
 }
 

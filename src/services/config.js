@@ -1,5 +1,5 @@
 const config = {
-    API_URL: "https://api.challengecup.fr",
+    API_URL: "http://localhost:8000",
 }
 
 export default config
