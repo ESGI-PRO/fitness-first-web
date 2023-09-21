@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { getRandomeUserImage } from "../constants/globals";
 import { sub } from "date-fns";
 import { fDateTime, fAddMonths, fAddYears } from "../utils/formatTime";
 import { Link } from "react-router-dom";
+import { useScrollTrigger } from "@mui/material";
+import subscriptionAPI from "../services/api/subscription.service";
 
 function UserVerticalCard(props) {
   const { user, subscription } = props;
+  const [invoice, setInvoice] = useState([]);
+
+  useEffect(() => {
+    fetchInvoice();
+  }, []);
 
   const getEndDate = (name) => {
     const date = new Date(subscription.currentPeriodStart);
+    
+    if (name === '' || name === null || name === undefined) {
+        name = 'Monthly'
+    }
+
     switch (name) {
       case "Monthly":
         return fDateTime(fAddMonths(date, 1));
@@ -19,6 +31,13 @@ function UserVerticalCard(props) {
       default:
         return fDateTime(fAddMonths(date, 1));
     }
+  };
+
+  const fetchInvoice = async () => {
+    const invoice = await subscriptionAPI.getInvoices();
+    console.log("🚀 ~ file: Invoice.js:25 ~ fetchInvoice ~ invoice:", invoice);
+
+    setInvoice(...invoice);
   };
 
   if (user && subscription) {
@@ -62,7 +81,12 @@ function UserVerticalCard(props) {
           </p>
 
           <p className="blackColor14Medium mt-2">
-            <Link to={'/dashboard/subscription/invoice'} className="mr-4 blackColor14SemiBold">Voir ma facture</Link>
+            <a
+              href={invoice?.hostedInvoiceUrl}
+              className="mr-4 blackColor14SemiBold"
+            >
+              Voir ma facture
+            </a>
           </p>
         </div>
       </div>
@@ -83,6 +107,22 @@ function UserVerticalCard(props) {
             TRAINER
           </p>
         )}{" "}
+        <div class="flex items-center my-4 space-x-4">
+          <Link
+            to={"/dashboard/meeting"}
+            type="button"
+            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          >
+            Envoyer un message à mon coach
+          </Link>
+          <Link
+            to={"/dashboard/meeting"}
+            type="button"
+            class="py-2 px-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          >
+            Rejoindre en meeting
+          </Link>
+        </div>
       </div>
     </div>
   ) : null;

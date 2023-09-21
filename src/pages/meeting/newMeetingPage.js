@@ -78,7 +78,7 @@ export default function NewMeetingPage(){
 
             <div className='flex flex-row w-full mb-8 '>
                 <p className='my-8 w-full text-center blackColor16SemiBold' >
-                    {user?.isTrainer ? "CHOOSE A TRAINEE" : "CHOOSE A TRAINER"}
+                    {user?.isTrainer ? "Retrouvez l'ensemble de vos mettings avec vos eleves ! " : "CHOOSE A TRAINER"}
                 </p>
             </div>
 
