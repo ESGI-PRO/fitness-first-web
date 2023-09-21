@@ -7,6 +7,7 @@ import account from '../../../_mock/account';
 import AuthService from '../../../services/api/auth.service';
 import { useAppState } from '../../../context/app-state-context';
 import { useNavigate } from 'react-router-dom';
+import notif from '../../../services/alert';
 
 // ----------------------------------------------------------------------
 
@@ -46,6 +47,7 @@ export default function AccountPopover() {
     await authService.logout();
     setAppState({user: null});
     navigate('/login', { replace: true });
+    notif.success('Deconnecté !')
   }
 
   return (

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Container, Typography } from '@mui/material';
@@ -44,8 +44,14 @@ const authService = new AuthService();
 
 export default function LoginPage() {
   const mdUp = useResponsive('up', 'md');
+  const token = localStorage.getItem('tokens');
+  const navigate = useNavigate()
 
-
+  useEffect(() => {
+    if(token) {
+      navigate('/dashboard')
+    }
+  },[])
   return (
     <>
       <Helmet>
