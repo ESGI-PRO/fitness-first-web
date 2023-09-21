@@ -46,7 +46,7 @@ function UserVerticalCard(props) {
             <p className="blackColor20Medium mb-2">
               {user?.userName[0].toUpperCase() + user?.userName.slice(1)}{" "}
             </p>
-            <p className="blackColor14Medium">{user.email}</p>
+            <p className="blackColor14Medium">{user?.email}</p>
             {user?.trainerSpeciality && (
               <p className="primaryColor14SemiBold">
                 {user?.trainerSpeciality}
@@ -67,7 +67,7 @@ function UserVerticalCard(props) {
           </p>
           <p className="blackColor14Medium  mt-2">
             <span className="mr-4 blackColor14SemiBold">Period End:</span>
-            {getEndDate(subscription.plan.name)}{" "}
+            {getEndDate(subscription.plan?.name)}{" "}
           </p>
 
           <p className="blackColor14Medium mt-2">
