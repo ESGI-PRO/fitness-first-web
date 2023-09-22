@@ -66,7 +66,7 @@ useEffect(() => {
     }
 
     // check if number is 10 digits
-    if(state.mobile.length >= 10){
+    if(state.mobile.length < 10){
       setState({ ...state, error: 'Mobile number should be 10 digits' });
       return;
     }
