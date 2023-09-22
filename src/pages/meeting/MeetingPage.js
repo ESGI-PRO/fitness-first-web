@@ -21,25 +21,25 @@ export default function MeetingPage() {
         const init = async () => {
          try{
             const meetings = await meetingService.getAllUserMeetings(user?.id) || [];
-            console.log("meetings", user, meetings);
+            // console.log("meetings", user, meetings);
             setAppState({meetings: meetings})
          }catch(error){
-             console.log("error", error);
+             // console.log("error", error);
          }
         };
         init();
     }, []);
 
     const joinMeeting = async (item) => {
-        console.log("item", item);
+        // console.log("item", item);
         const opponent = item.members.find((member) => member.id !== user.id);
         const {token} = await meetingService.getTwilioToken(user.id);
         const room = await meetingService.getRoomByIds([user.id, opponent.id]);
-        console.log("MeetingVideo", {
-            opponent: opponent,
-            token: token,
-            roomName: room._id
-        });
+        // console.log("MeetingVideo", {
+        //     opponent: opponent,
+        //     token: token,
+        //     roomName: room._id
+        // });
         modal.showModal(<VideoModal opponent={opponent} accessToken={token} roomName={room._id} close={() => modal.hideModal()}/>)
     }
 

@@ -15,7 +15,7 @@ function ChatRoom({setOpenRoom, opponent, room}) {
 
     useEffect(() => {
         messengerService.getAllUserMessages(room._id).then((res) => {
-            console.log(res);
+            // console.log(res);
             setMessages(res ?. messages || []);
         });
     }, []);

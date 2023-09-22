@@ -16,7 +16,7 @@ import { set } from 'date-fns';
 const meetingService = new MeetingService();
 
 export default function CreationMeetingModal({ item , close}) {
-    console.log("item", item);
+    // console.log("item", item);
     const user = getLoggedInUser();
     const [opponent, setOpponent] = React.useState(null);
     const [meeting, setMeeting] = React.useState({
@@ -82,7 +82,7 @@ export default function CreationMeetingModal({ item , close}) {
                 description: meeting.description,
                 members: [opponent.id, user.id]
             }
-            console.log("meeting-data", data);
+            // console.log("meeting-data", data);
             await meetingService.createMeeting(data);
             setMeeting({
                 description: '',

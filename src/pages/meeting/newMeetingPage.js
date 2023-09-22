@@ -35,12 +35,12 @@ export default function NewMeetingPage(){
     }, []);
 
     const createMeeting = (item) => {
-        console.log("item", item);
+        // console.log("item", item);
         modal.showModal(<CreationMeetingModal item={item}  close={() => modal.hideModal()} />, true);
     }
 
     const RenderItem = ({ item }) => {
-        console.log("item", item);
+        // console.log("item", item);
         return item && <div className='mx-4 w-full' style={{
             minWidth: 400
         }}>

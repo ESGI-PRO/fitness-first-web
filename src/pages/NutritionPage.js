@@ -42,7 +42,7 @@ export default function NutritionPage() {
   useEffect(() => {
     const basic = async () => {
       const infos = await storage.getToken();
-      // console.log(infos);
+      // // console.log(infos);
       setToken(infos);
 
       const user = await storage.getItem("user");
@@ -51,7 +51,7 @@ export default function NutritionPage() {
       const userId = await storage.getUserId();
       setUserId(userId);
 
-      // console.log(Basicoptions);
+      // // console.log(Basicoptions);
 
       if (infos && user) {
         Basicoptions.headers.Authorization = `Bearer ${infos}`;
@@ -173,7 +173,7 @@ export default function NutritionPage() {
 
   const fetchMyRecettes = async () => {
     const p = await nutrition.getAllUserNutritions();
-    // console.log("🚀 ~ file: NutritionPage.js:104 ~ fetchMyRecettes ~ p:", p);
+    // // console.log("🚀 ~ file: NutritionPage.js:104 ~ fetchMyRecettes ~ p:", p);
     setMyRecettes(p);
   };
 
@@ -195,7 +195,7 @@ export default function NutritionPage() {
     nutrition
       .createNutrition(data)
       .then((res) => {
-        console.log("La requête a réussi avec le statut");
+        // console.log("La requête a réussi avec le statut");
         notif.success("Votre recette a été créée !");
         setOpen(false);
         fetchMyRecettes();
@@ -209,7 +209,7 @@ export default function NutritionPage() {
     // Handle form submission
     values["UserId"] =
       user.isTrainer && user.isTrainer === true ? user.id : user.trainerId;
-    console.log(values);
+    // console.log(values);
     createRecette(values);
     resetForm();
   };
@@ -229,7 +229,9 @@ export default function NutritionPage() {
           <div
             onClick={() => setOpen(!open)}
             className={
-              "px-8 py-2 flex items-center cursor-pointer  primaryColorBackground cursor-pointer"
+              user?.isTrainer === true
+                ? "px-8 py-2 flex items-center cursor-pointer  primaryColorBackground cursor-pointer"
+                : "hidden"
             }
           >
             <p className="whiteColor14Medium">
@@ -325,65 +327,60 @@ export default function NutritionPage() {
                                     </div>
                                     <div className="w-full flex flex-row my-3">
                                       <div className="grid grid-cols-4">
-                                          {instruction.produits.map(
-                                            (produit, pIndex) => (
-                                              <div
-                                                key={pIndex}
-                                                className="mr-4"
-                                              >
-                                                <div>
-                                                  <div className="flex flex-col my-2">
-                                                    <label className="mb-2">
-                                                      Quantite en gr{" "}
-                                                    </label>
-                                                    <Field
-                                                      type="number"
-                                                      className="shadow-sm"
-                                                      name={`instructions[${index}].produits[${pIndex}].quantite`}
-                                                    />
-                                                  </div>
+                                        {instruction.produits.map(
+                                          (produit, pIndex) => (
+                                            <div key={pIndex} className="mr-4">
+                                              <div>
+                                                <div className="flex flex-col my-2">
+                                                  <label className="mb-2">
+                                                    Quantite en gr{" "}
+                                                  </label>
+                                                  <Field
+                                                    type="number"
+                                                    className="shadow-sm"
+                                                    name={`instructions[${index}].produits[${pIndex}].quantite`}
+                                                  />
+                                                </div>
 
-                                                  <div className="flex flex-col my-2">
-                                                    <label className="mb-2">
-                                                      Ingredients:
-                                                    </label>
+                                                <div className="flex flex-col my-2">
+                                                  <label className="mb-2">
+                                                    Ingredients:
+                                                  </label>
 
-                                                    <Select
-                                                      className="shadow-sm"
-                                                      name={`instructions[${index}].produits[${pIndex}].ingredients`}
-                                                      onChange={handleChange}
-                                                    >
-                                                      {ingredients?.map(
-                                                        (option) => (
-                                                          <MenuItem
-                                                            key={option.id}
-                                                            value={option.id}
-                                                            selected={
-                                                              option.id ===
-                                                              `instructions[${index}].produits[${pIndex}].ingredients`
-                                                            }
-                                                          >
-                                                            {option.name}
-                                                          </MenuItem>
-                                                        )
-                                                      )}
-                                                    </Select>
-                                                  </div>
-
-                                                  <div
-                                                    onClick={() =>
-                                                      remove(pIndex)
-                                                    }
-                                                    className="shadow-sm px-4 py-2 my-4 bg-red-400 cursor-pointer"
+                                                  <Select
+                                                    className="shadow-sm"
+                                                    name={`instructions[${index}].produits[${pIndex}].ingredients`}
+                                                    onChange={handleChange}
                                                   >
-                                                    <p className="whiteColor14Medium">
-                                                      Supprimer ingredient
-                                                    </p>
-                                                  </div>
+                                                    {ingredients?.map(
+                                                      (option) => (
+                                                        <MenuItem
+                                                          key={option.id}
+                                                          value={option.id}
+                                                          selected={
+                                                            option.id ===
+                                                            `instructions[${index}].produits[${pIndex}].ingredients`
+                                                          }
+                                                        >
+                                                          {option.name}
+                                                        </MenuItem>
+                                                      )
+                                                    )}
+                                                  </Select>
+                                                </div>
+
+                                                <div
+                                                  onClick={() => remove(pIndex)}
+                                                  className="shadow-sm px-4 py-2 my-4 bg-red-400 cursor-pointer"
+                                                >
+                                                  <p className="whiteColor14Medium">
+                                                    Supprimer ingredient
+                                                  </p>
                                                 </div>
                                               </div>
-                                            )
-                                          )}
+                                            </div>
+                                          )
+                                        )}
                                       </div>
                                     </div>
                                   </>

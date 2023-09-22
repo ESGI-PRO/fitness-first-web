@@ -23,7 +23,7 @@ export default function TrainerPage({ user }) {
     const init = async () => {
       if (user) {
         const response = await authService.getUsersByIds(user?.traineeIds);
-        console.log("response", response);
+        // console.log("response", response);
         setUsers(response);
       }
     };

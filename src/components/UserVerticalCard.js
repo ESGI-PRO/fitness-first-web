@@ -33,7 +33,7 @@ function UserVerticalCard(props) {
 
   const fetchInvoice = async () => {
     const invoice = await subscriptionAPI.getInvoices() || [];
-    console.log("🚀 ~ file: Invoice.js:25 ~ fetchInvoice ~ invoice:", invoice);
+    // console.log("🚀 ~ file: Invoice.js:25 ~ fetchInvoice ~ invoice:", invoice);
     invoice.length > 0 && setInvoice(invoice[0]);
   };
 

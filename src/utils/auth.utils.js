@@ -47,7 +47,7 @@ const getLoggedInUser = () => {
  */
  const getTokens = async () => {
     const tokens = localStorage.getItem('tokens');
-    console.log("tokens first", tokens)
+    // console.log("tokens first", tokens)
     return tokens ? (typeof (tokens) == 'object' ? tokens : JSON.parse(tokens)) : null;
 }
 

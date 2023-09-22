@@ -29,7 +29,7 @@ export default function LoginForm() {
 
 
   const login = () => {
-    console.log('state', state);
+    // console.log('state', state);
     if (!state.email || !state.password) {
         setState({ ...state, error: 'Please fill all the fields' });
         return;
@@ -57,7 +57,7 @@ export default function LoginForm() {
         }
     }).catch((err) => {
         setLoading(false);
-        console.log('err', err);
+        // console.log('err', err);
         notif.error('Credentials non correcte !')
 
     })
