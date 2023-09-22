@@ -109,7 +109,7 @@ function UserVerticalCard(props) {
         )}{" "}
         <div class="flex items-center my-4 space-x-4">
           <Link
-            to={"/dashboard/meeting"}
+            to={"/dashboard/messenger"}
             type="button"
             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
           >
