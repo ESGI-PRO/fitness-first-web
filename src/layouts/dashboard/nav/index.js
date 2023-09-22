@@ -58,7 +58,7 @@ export default function Nav({ openNav, onCloseNav }) {
     }
     catch (error) {
       notif.error('Something went wrong');
-      console.log(error);
+      // console.log(error);
     }
     setLoading(false);
   };

@@ -81,17 +81,17 @@ useEffect(() => {
     if(state.password){
       data.password = state.password;
     }
-  console.log('data', data);
+  // console.log('data', data);
       authService.updateUser(data, user.id).then((res) => {
         setLoading(false);
-        console.log('resherebro', res);
+        // console.log('resherebro', res);
         reset();
         setAppState({user: res});
         setLoggedInUser(res);
       }).catch((err) => {
         setLoading(false);
         setState({ ...state, error: "Something went wrong updating user"});
-        console.log('err', err);
+        // console.log('err', err);
       })
       return;
     }else{

@@ -14,7 +14,7 @@ function OpponentList({openChat}) {
 
     useEffect(() => {
         messengerService.getAllUserRooms(user.id).then((res) => {
-            console.log(res);
+            // console.log(res);
             setRooms(res?.rooms || []);
         });
     }, []);

@@ -23,7 +23,7 @@ export default function AssignExercisesPage({setOpenAssignExercises}) {
     const [currentPage, setCurrentPage] = useState(1);
 
     const assignTrainings = async () => {
-        console.log("selectedExercises", selectedExercises);
+        // console.log("selectedExercises", selectedExercises);
         await trainingService.createExercises({
             exercises: selectedExercises,
         }).then(() => {
@@ -32,12 +32,12 @@ export default function AssignExercisesPage({setOpenAssignExercises}) {
     };
 
     const updateTrainings = (exercise) => {
-        console.log("passedHere1", selectedExercises, exercise);
+        // console.log("passedHere1", selectedExercises, exercise);
         if (selectedExercises.reduce((acc, item) => acc || item.content.id === exercise.content.id, false)) {
-            console.log("passedHere", selectedExercises);
+            // console.log("passedHere", selectedExercises);
             setSelectedExercises(selectedExercises.filter(item => item.content.id !== exercise.content.id));
         } else {
-            console.log("passedHere0", selectedExercises);
+            // console.log("passedHere0", selectedExercises);
             setSelectedExercises([
                 ...selectedExercises,
                 exercise
@@ -73,7 +73,7 @@ export default function AssignExercisesPage({setOpenAssignExercises}) {
                 }
             }
 
-            console.log(exercisesData);
+            // console.log(exercisesData);
             setExercises(exercisesData);
         };
 

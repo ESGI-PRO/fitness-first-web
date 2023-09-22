@@ -4,7 +4,7 @@ import { getTokens, setLoggedInUser, setTokens } from  "../utils/auth.utils";
 
 const getHeaders = async () => {
     const tokens = await getTokens();
-    console.log("tokens", tokens)
+    // console.log("tokens", tokens)
     return tokens?.access?.token ? {
         'Authorization': `Bearer ${tokens.access.token}`,
         'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ class APIClient {
             });
             return await response.json();
         } catch (error) {
-            console.log("error", error)
+            // console.log("error", error)
         }
     }
 
@@ -43,7 +43,7 @@ class APIClient {
             });
             return await response.json();
         } catch (error) {
-            console.log("error", error)
+            // console.log("error", error)
         }
     }
 
@@ -59,7 +59,7 @@ class APIClient {
             });
             return await response.json();
         } catch (error) {
-            console.log("error", error)
+            // console.log("error", error)
         }
 
     }
@@ -76,7 +76,7 @@ class APIClient {
             });
             return await response.json();
         } catch (error) {
-            console.log("error", error)
+            // console.log("error", error)
         }
     }
     /**
@@ -90,14 +90,14 @@ class APIClient {
             });
             return await response.json();
         } catch (error) {
-            console.log("error", error)
+            // console.log("error", error)
         }
         
     }
 }
 
 const handleErrors = async (response) => {
-    console.log("handleErrors-response", response)
+    // console.log("handleErrors-response", response)
  // if not authorized refresh token
     if (response?.message === "token_decode_unauthorized") {
 
@@ -111,7 +111,7 @@ const handleErrors = async (response) => {
             res?.data?.token && setTokens(res.data.token)
         }
         ).catch((err) => {
-            console.log("err", err)
+            // console.log("err", err)
         })
     }
 

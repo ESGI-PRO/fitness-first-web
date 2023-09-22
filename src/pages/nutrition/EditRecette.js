@@ -25,14 +25,14 @@ export default function EditRecette({ recipe }) {
     getRecette();
     fetchUsers();
     fetchIngredients();
-    console.log(state);
+    // console.log(state);
   }, []);
 
   const handleSubmit = (values, { resetForm }) => {
     // Handle form submission
     // values["UserId"] = user.id;
     values["studentIds"] = [...values["studentIds"]];
-    console.log(values);
+    // console.log(values);
 
     nutrition.updateNutrition(values).then(() => {
       notif.success("Recette mise a jour !");
@@ -51,9 +51,9 @@ export default function EditRecette({ recipe }) {
   };
 
   const findIngredients = async (id) => {
-    console.log(ingredients);
+    // console.log(ingredients);
     var p = ingredients.find((ing) => ing.id === id);
-    console.log("🚀 ~ file: ViewRecette.js:27 ~ findIngredients ~ p:", p);
+    // console.log("🚀 ~ file: ViewRecette.js:27 ~ findIngredients ~ p:", p);
     return p?.name;
   };
 

@@ -51,7 +51,7 @@ export default class AuthService {
     }
 
     async updateUser(data, id) {
-        console.log('newUserUpdate', data, id);
+        // console.log('newUserUpdate', data, id);
         const response = await client.put(USER_URL+ "/" + id , {
             ... data
         });

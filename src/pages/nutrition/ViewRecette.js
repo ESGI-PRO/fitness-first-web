@@ -17,7 +17,7 @@ export default function ViewRecette() {
   useEffect(() => {
     getRecette();
     fetchUsers();
-    console.log(ingredients);
+    // console.log(ingredients);
   }, []);
 
   const fetchUsers = async () => {
@@ -27,20 +27,20 @@ export default function ViewRecette() {
 
   const getRecette = async () => {
     const p = await nutrition.getRecetteByID(id);
-    console.log("🚀 ~ file: ViewRecette.js:19 ~ getRecette ~ p:", p);
+    // console.log("🚀 ~ file: ViewRecette.js:19 ~ getRecette ~ p:", p);
     setShowDetails(p);
   };
 
   const findIngredients = async (id) => {
-    console.log(ingredients);
+    // console.log(ingredients);
     var p = ingredients.find((ing) => ing.id === id);
-    console.log("🚀 ~ file: ViewRecette.js:27 ~ findIngredients ~ p:", p);
+    // console.log("🚀 ~ file: ViewRecette.js:27 ~ findIngredients ~ p:", p);
     return p?.name;
   };
 
   const getStudent = (id) => {
     var m = users.find((it) => it.id === String(id));
-    console.log("🚀 ~ file: ViewRecette.js:37 ~ getStudent ~ m:", id, m);
+    // console.log("🚀 ~ file: ViewRecette.js:37 ~ getStudent ~ m:", id, m);
     return m?.userName ? m.userName : "anonymous";
   };
 

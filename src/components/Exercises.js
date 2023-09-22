@@ -33,7 +33,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
         }
       }
 
-      console.log(exercisesData);
+      // console.log(exercisesData);
       setExercises(exercisesData);
     };
 

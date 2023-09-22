@@ -69,13 +69,9 @@ class NutritionService {
   }
 
   async getAllUserNutritions() {
-    console.log(
-      "user----------------------------------------------------------------"
-    );
-    console.log(user);
-    console.log(
-      "user----------------------------------------------------------------"
-    );
+    // console.log(
+    // console.log(user);
+    // console.log(
     var id = user.trainerId?.length > 0 ? user.trainerId : user.id;
     const response = await client.get(RECETTE_URL + "/" + id + "/user");
     handleErrors(response);

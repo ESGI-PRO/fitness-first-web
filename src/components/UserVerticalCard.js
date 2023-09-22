@@ -33,7 +33,7 @@ function UserVerticalCard(props) {
 
   const fetchInvoice = async () => {
     const invoice = await subscriptionAPI.getInvoices() || [];
-    console.log("🚀 ~ file: Invoice.js:25 ~ fetchInvoice ~ invoice:", invoice);
+    // console.log("🚀 ~ file: Invoice.js:25 ~ fetchInvoice ~ invoice:", invoice);
     invoice.length > 0 && setInvoice(invoice[0]);
   };
 
@@ -80,6 +80,7 @@ function UserVerticalCard(props) {
             <a
               href={invoice?.hostedInvoiceUrl}
               className="cursor-pointer mr-4 primaryColor14SemiBold"
+              target="_blank"
             >
               Voir ma facture
             </a>

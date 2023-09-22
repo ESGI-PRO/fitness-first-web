@@ -18,7 +18,7 @@ const AssignTrainerPage = ({ user, updateUser }) => {
   useEffect(() => {
     const init = async () => {
       const response = await authService.getAllTrainers();
-      console.log("response", response);
+      // console.log("response", response);
       setTrainers(response);
     };
     init();
@@ -96,7 +96,7 @@ const TrainneeTrainingPage = ({ user }) => {
     const init = async () => {
       if (user) {
         const response = await authService.getUserById(user?.trainerId);
-        console.log("response", response);
+        // console.log("response", response);
         setTrainer(response);
       }
     };
@@ -124,7 +124,7 @@ export default function TraineePage() {
   const updateUser = async () => {
     if (user) {
       const response = await authService.getUserById(user?.id);
-      console.log("response", response);
+      // console.log("response", response);
       setLoggedInUser(response);
       setUser(response);
     }
