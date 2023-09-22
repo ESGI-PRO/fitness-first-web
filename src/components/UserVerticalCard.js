@@ -28,8 +28,8 @@ function UserVerticalCard(props) {
         return fDateTime(fAddMonths(date, 6));
       case "Yearly":
         return fDateTime(fAddYears(date, 1));
-      default:
-        return fDateTime(fAddMonths(date, 1));
+      // default:
+      //   return fDateTime(fAddMonths(date, 1));
     }
   };
 
