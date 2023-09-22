@@ -65,6 +65,12 @@ useEffect(() => {
         return;
     }
 
+    // check if number is 10 digits
+    if(state.mobile.length < 10){
+      setState({ ...state, error: 'Mobile number should be 10 digits' });
+      return;
+    }
+
     setLoading(true);
 
     if(update === true){
@@ -99,10 +105,8 @@ useEffect(() => {
   
       authService.register(data).then((res) => {
         setLoading(false);
-        console.log('res', res);
         reset();
-        // setAppState({user: res.user, tokens: res.token});
-        navigate('/login', { replace: true });
+        navigate('/login');
 
     }).catch((err) => {
         setLoading(false);
@@ -178,7 +182,7 @@ useEffect(() => {
         },
       }}
       >
-       { update ? 'Update' :'Login'}
+       { update ? 'Update' :'Register'}
       </LoadingButton>
     </>
   );

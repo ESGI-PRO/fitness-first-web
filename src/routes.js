@@ -16,13 +16,20 @@ import NutritionPage from "./pages/NutritionPage";
 
 import ViewRecette from "./pages/nutrition/ViewRecette";
 import EditRecette from "./pages/nutrition/EditRecette";
-import Invoice from "./pages/subscription/Invoice";
 
 export default function Router() {
   const routes = useRoutes([
     {
       path: "/",
       element: <Home />,
+    },
+    {
+      path: "/login",
+      element: <LoginPage />,
+    },
+    {
+      path: "/register",
+      element: <SignUpPage />,
     },
     {
       path: "/exercise/:id",
@@ -43,19 +50,7 @@ export default function Router() {
         { path: "messenger", element: <MessengerPage /> },
         { path: "training", element: <TrainingPage /> },
         { path: "profile", element: <ProfilePage /> },
-        {
-          path: "subscription/invoice",
-          element: <Invoice />,
-        },
       ],
-    },
-    {
-      path: "login",
-      element: <LoginPage />,
-    },
-    {
-      path: "register",
-      element: <SignUpPage />,
     },
     {
       path: "404",

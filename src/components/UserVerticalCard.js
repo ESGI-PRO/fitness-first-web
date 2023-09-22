@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getRandomeUserImage } from "../constants/globals";
-import { sub } from "date-fns";
 import { fDateTime, fAddMonths, fAddYears } from "../utils/formatTime";
 import { Link } from "react-router-dom";
-import { useScrollTrigger } from "@mui/material";
 import subscriptionAPI from "../services/api/subscription.service";
 
 function UserVerticalCard(props) {
@@ -28,16 +26,15 @@ function UserVerticalCard(props) {
         return fDateTime(fAddMonths(date, 6));
       case "Yearly":
         return fDateTime(fAddYears(date, 1));
-      // default:
-      //   return fDateTime(fAddMonths(date, 1));
+      default:
+        return fDateTime(fAddMonths(date, 1));
     }
   };
 
   const fetchInvoice = async () => {
-    const invoice = await subscriptionAPI.getInvoices();
+    const invoice = await subscriptionAPI.getInvoices() || [];
     console.log("🚀 ~ file: Invoice.js:25 ~ fetchInvoice ~ invoice:", invoice);
-
-    setInvoice(...invoice);
+    invoice.length > 0 && setInvoice(invoice[0]);
   };
 
   if (user && subscription) {
@@ -80,14 +77,13 @@ function UserVerticalCard(props) {
             {subscription.plan?.price / 100} €{" "}
           </p>
 
-          <p className="blackColor14Medium mt-2">
             <a
               href={invoice?.hostedInvoiceUrl}
-              className="mr-4 blackColor14SemiBold"
+              className="cursor-pointer mr-4 primaryColor14SemiBold"
             >
               Voir ma facture
             </a>
-          </p>
+     
         </div>
       </div>
     );
