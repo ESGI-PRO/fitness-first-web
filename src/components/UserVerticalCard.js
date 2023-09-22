@@ -80,6 +80,7 @@ function UserVerticalCard(props) {
             <a
               href={invoice?.hostedInvoiceUrl}
               className="cursor-pointer mr-4 primaryColor14SemiBold"
+              target="_blank"
             >
               Voir ma facture
             </a>
