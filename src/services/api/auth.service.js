@@ -19,6 +19,7 @@ export default class AuthService {
         localStorage.removeItem("user");
         localStorage.removeItem("tokens");
         localStorage.removeItem("subscription");
+        localStorage.removeItem("appState");
     }
 
     async register(data) {
@@ -45,7 +46,6 @@ export default class AuthService {
         const response = await client.post(REGISTER_URL, {
             ... newUser
         });
-        handleErrors(response);
 
         return response.data;
     }

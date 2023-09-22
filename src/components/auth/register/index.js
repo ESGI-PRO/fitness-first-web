@@ -106,7 +106,6 @@ useEffect(() => {
       authService.register(data).then((res) => {
         setLoading(false);
         reset();
-        // setAppState({user: res.user, tokens: res.token});
         navigate('/login');
 
     }).catch((err) => {

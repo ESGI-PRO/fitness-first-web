@@ -103,7 +103,6 @@ const handleErrors = async (response) => {
 
         const client = new APIClient();
         const tokens = await getTokens();
-        console.log("tokensbro", tokens)
 
         client.post(REFRESH_TOKEN_URL, {
             token: tokens.refresh.token
