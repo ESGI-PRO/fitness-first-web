@@ -49,8 +49,8 @@ export default function MeetingPage() {
         const opponent = item.members.find((member) => member.id !== user.id);
 
         return (
-            <div className='mx-4'>
-                <div className='flex flex-row items-center'>
+            <div className='mx-4' style={{ width: 400 }}>
+                <div className='flex flex-row items-center' >
                     <div>
                         <img src={getRandomeUserImage()}
                             className='h-8 w-8 rounded-full'/>
