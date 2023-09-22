@@ -33,7 +33,7 @@ function UserVerticalCard(props) {
 
   const fetchInvoice = async () => {
     const invoice = await subscriptionAPI.getInvoices() || [];
-    // console.log("🚀 ~ file: Invoice.js:25 ~ fetchInvoice ~ invoice:", invoice);
+    console.log("🚀 ~ file: Invoice.js:25 ~ fetchInvoice ~ invoice:", invoice);
     invoice.length > 0 && setInvoice(invoice[0]);
   };
 
@@ -63,14 +63,14 @@ function UserVerticalCard(props) {
             <span className="mr-4 blackColor14SemiBold">Plan:</span>
             {subscription.plan?.slug}{" "}
           </p>
-          <p className="blackColor14Medium  mt-2">
+      {  subscription?.currentPeriodStart &&  <p className="blackColor14Medium  mt-2">
             <span className="mr-4 blackColor14SemiBold">Period Start:</span>
-            {fDateTime(subscription.currentPeriodStart)}{" "}
-          </p>
-          <p className="blackColor14Medium  mt-2">
+            { fDateTime(subscription.currentPeriodStart)}{" "}
+          </p>}
+{      subscription.plan?.name &&      <p className="blackColor14Medium  mt-2">
             <span className="mr-4 blackColor14SemiBold">Period End:</span>
             {getEndDate(subscription.plan?.name)}{" "}
-          </p>
+          </p>}
 
           <p className="blackColor14Medium mt-2">
             <span className="mr-4 blackColor14SemiBold">Price:</span>
