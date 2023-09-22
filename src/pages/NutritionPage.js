@@ -65,7 +65,7 @@ export default function NutritionPage() {
     };
 
     basic();
-  }, []);
+  }, [MyRecettes]);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -183,15 +183,6 @@ export default function NutritionPage() {
   };
 
   const createRecette = async (data) => {
-    // fetchData(API_URL + "/nutrition", {
-    //   method: "POST",
-    //   body: JSON.stringify({data}),
-    //   headers: {
-    //     Authorization: `Bearer ` + token,
-    //     accept: "application/json",
-    //   },
-    // })
-
     nutrition
       .createNutrition(data)
       .then((res) => {
